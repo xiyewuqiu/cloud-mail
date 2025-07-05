@@ -6,18 +6,18 @@ keep_vars = true
 [observability]
 enabled = true
 
-#[[d1_databases]]
-#binding = "db"			#d1数据库绑定名默认不可修改
-#database_name = ""		#d1数据库名字
-#database_id = ""		#d1数据库id
+[[d1_databases]]
+binding = "db"			#d1数据库绑定名默认不可修改
+database_name = "email"		#d1数据库名字
+database_id = "1bceb53f-5893-4bb0-a53f-7abb807b8f38"		#d1数据库id
 
-#[[kv_namespaces]]
-#binding = "kv"			#kv绑定名默认不可修改
-#id = ""					#kv数据库id
+[[kv_namespaces]]
+binding = "kv"			#kv绑定名默认不可修改
+id = "b0b6379a6e3a4ebdaec6dd46f8701e60"					#kv数据库id
 
-#[[r2_buckets]]
-#binding = "r2"			#r2对象存储绑定名默认不可修改
-#bucket_name = ""		#r2对象存储桶的名字
+[[r2_buckets]]
+binding = "r2"			#r2对象存储绑定名默认不可修改
+bucket_name = "email"		#r2对象存储桶的名字
 
 [assets]
 binding = "assets"		#静态资源绑定名默认不可修改
@@ -29,8 +29,46 @@ run_worker_first = true
 crons = ["0 16 * * *"]	#定时任务每天晚上12点执行
 
 
-#[vars]
-#orm_log = false
-#domain = []				#邮件域名可可配置多个 示例: ["example1.com","example2.com"]
-#admin = ""				#管理员的邮箱	示例: admin@example.com
-#jwt_secret = ""			#jwt令牌的密钥,随便填一串字符串
+[vars]
+# 基础配置
+orm_log = false
+domain = ["djss.xyz"]                    # 邮件域名，可配置多个
+admin = "admin@djss.xyz"                 # 管理员邮箱
+jwt_secret = "drtygcfgtyhggh@#￥%vcghgfrtgfdtyhc"      # JWT令牌密钥
+
+# 网站基础设置 (0=开启, 1=关闭)
+register = 1                             # 用户注册 (1=关闭，改为邀请制)
+receive = 0                              # 邮件接收 (0=开启)
+send = 0                                 # 邮件发送 (0=开启)
+add_email = 0                            # 添加邮箱 (0=开启)
+many_email = 0                           # 多号模式 (0=开启，允许一用户多邮箱)
+auto_refresh_time = 30                   # 轮询刷新时间(秒)
+
+# 验证设置
+register_verify = 0                      # 注册人机验证 (0=开启)
+add_email_verify = 0                     # 添加邮箱验证
+
+# 个性化设置
+title = "我们群的专属邮箱"               # 网站标题
+login_opacity = 0.88                     # 登录页透明度
+
+# Resend 邮件发送配置
+resend_token_djss_xyz = "re_gmLpdfL6_4E35cnP6zR3fgZJTB2LrLvau"  # Resend API Token
+
+# R2 对象存储配置
+r2_domain = "https://r2.djxs.xyz"  # R2访问域名
+
+# Turnstile 人机验证配置 (可选，防止机器人注册)
+# turnstile_site_key = "your-site-key"     # Turnstile Site Key
+# turnstile_secret_key = "your-secret-key" # Turnstile Secret Key
+
+# Telegram 机器人配置 (可选，邮件推送通知)
+# tg_bot_token = "your-bot-token"          # TG机器人Token
+# tg_chat_id = "your-chat-id"              # TG Chat ID
+tg_bot_status = 1                        # TG推送状态 (1=关闭，暂时不用)
+
+# 邮件转发配置
+forward_email = "xiyewuqiu@gmail.com"       # 转发邮箱
+forward_status = 1                       # 转发状态 (1=关闭)
+rule_email = ""                          # 规则邮箱
+rule_type = 0                            # 规则类型 (0=全部)

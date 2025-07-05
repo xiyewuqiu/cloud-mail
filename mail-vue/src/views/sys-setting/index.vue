@@ -89,6 +89,20 @@
                   </el-button>
                 </div>
               </div>
+              <!-- 群聊专属设置 -->
+              <div class="setting-item">
+                <div class="title-item">
+                  <span>群聊公告</span>
+                  <el-tooltip effect="dark" content="在邮箱首页显示群聊公告">
+                    <Icon class="warning" icon="fe:warning" width="18" height="18"/>
+                  </el-tooltip>
+                </div>
+                <div>
+                  <el-button class="opt-button" size="small" type="primary" @click="editAnnouncementShow = true">
+                    <Icon icon="lsicon:edit-outline" width="16" height="16"/>
+                  </el-button>
+                </div>
+              </div>
               <div class="setting-item">
                 <div class="title-item"><span>登录透明</span></div>
                 <div>

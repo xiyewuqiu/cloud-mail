@@ -15,12 +15,95 @@ const init = {
 		await this.v1_2DB(c);
 		await this.v1_3DB(c);
 		await this.v1_3_1DB(c);
+		await this.v1_4DB(c);  // 新增：环境变量支持
 		await settingService.refresh(c);
 		return c.text('初始化成功');
 	},
 
 	async v1_3_1DB(c) {
 		await c.env.db.prepare(`UPDATE email SET name = SUBSTR(send_email, 1, INSTR(send_email, '@') - 1) WHERE (name IS NULL OR name = '') AND type = ${emailConst.type.RECEIVE}`).run();
+	},
+
+	async v1_4DB(c) {
+		// 添加环境变量支持所需的字段
+		const ADD_COLUMN_SQL_LIST = [
+			`ALTER TABLE setting ADD COLUMN send INTEGER DEFAULT 1;`,
+			`ALTER TABLE setting ADD COLUMN login_opacity REAL DEFAULT 0.88;`,
+			`ALTER TABLE setting ADD COLUMN r2_domain TEXT;`,
+			`ALTER TABLE setting ADD COLUMN site_key TEXT;`,
+			`ALTER TABLE setting ADD COLUMN secret_key TEXT;`,
+			`ALTER TABLE setting ADD COLUMN background TEXT;`,
+			`ALTER TABLE setting ADD COLUMN resend_tokens TEXT DEFAULT '{}';`
+		];
+
+		for (const sql of ADD_COLUMN_SQL_LIST) {
+			try {
+				await c.env.db.prepare(sql).run();
+			} catch (e) {
+				// 字段已存在，忽略错误
+				console.log('Column already exists:', e.message);
+			}
+		}
+
+		// 从环境变量更新设置（如果设置表已存在）
+		const existingSetting = await c.env.db.prepare(`SELECT COUNT(*) as count FROM setting`).first();
+		if (existingSetting && existingSetting.count > 0) {
+			// 从环境变量读取配置
+			const envConfig = {
+				register: c.env.register ?? null,
+				receive: c.env.receive ?? null,
+				send: c.env.send ?? null,
+				add_email: c.env.add_email ?? null,
+				many_email: c.env.many_email ?? null,
+				title: c.env.title ?? null,
+				auto_refresh_time: c.env.auto_refresh_time ?? null,
+				register_verify: c.env.register_verify ?? null,
+				add_email_verify: c.env.add_email_verify ?? null,
+				login_opacity: c.env.login_opacity ?? null,
+				r2_domain: c.env.r2_domain ?? null,
+				site_key: c.env.turnstile_site_key ?? null,
+				secret_key: c.env.turnstile_secret_key ?? null,
+				tg_bot_token: c.env.tg_bot_token ?? null,
+				tg_chat_id: c.env.tg_chat_id ?? null,
+				tg_bot_status: c.env.tg_bot_status ?? null,
+				forward_email: c.env.forward_email ?? null,
+				forward_status: c.env.forward_status ?? null,
+				rule_email: c.env.rule_email ?? null,
+				rule_type: c.env.rule_type ?? null
+			};
+
+			// 处理 Resend Tokens
+			const resendTokens = {};
+			if (c.env.domain && Array.isArray(c.env.domain)) {
+				c.env.domain.forEach(domain => {
+					const tokenKey = `resend_token_${domain.replace(/\./g, '_')}`;
+					if (c.env[tokenKey]) {
+						resendTokens[domain] = c.env[tokenKey];
+					}
+				});
+			}
+
+			// 构建更新SQL
+			const updateFields = [];
+			const updateValues = [];
+
+			Object.keys(envConfig).forEach(key => {
+				if (envConfig[key] !== null) {
+					updateFields.push(`${key} = ?`);
+					updateValues.push(envConfig[key]);
+				}
+			});
+
+			if (Object.keys(resendTokens).length > 0) {
+				updateFields.push(`resend_tokens = ?`);
+				updateValues.push(JSON.stringify(resendTokens));
+			}
+
+			if (updateFields.length > 0) {
+				const updateSQL = `UPDATE setting SET ${updateFields.join(', ')}`;
+				await c.env.db.prepare(updateSQL).bind(...updateValues).run();
+			}
+		}
 	},
 
 	async v1_3DB(c) {
@@ -314,22 +397,96 @@ const init = {
       CREATE TABLE IF NOT EXISTS setting (
         register INTEGER NOT NULL,
         receive INTEGER NOT NULL,
+        send INTEGER DEFAULT 1 NOT NULL,
         add_email INTEGER NOT NULL,
         many_email INTEGER NOT NULL,
         title TEXT NOT NULL,
         auto_refresh_time INTEGER NOT NULL,
         register_verify INTEGER NOT NULL,
-        add_email_verify INTEGER NOT NULL
+        add_email_verify INTEGER NOT NULL,
+        login_opacity REAL DEFAULT 0.88,
+        r2_domain TEXT,
+        site_key TEXT,
+        secret_key TEXT,
+        background TEXT,
+        tg_bot_token TEXT DEFAULT '',
+        tg_chat_id TEXT DEFAULT '',
+        tg_bot_status INTEGER DEFAULT 1,
+        forward_email TEXT DEFAULT '',
+        forward_status INTEGER DEFAULT 1,
+        rule_email TEXT DEFAULT '',
+        rule_type INTEGER DEFAULT 0,
+        resend_tokens TEXT DEFAULT '{}'
       )
     `).run();
 
+		// 从环境变量读取配置，如果没有则使用默认值
+		const envConfig = {
+			register: c.env.register ?? 0,
+			receive: c.env.receive ?? 0,
+			send: c.env.send ?? 0,
+			add_email: c.env.add_email ?? 0,
+			many_email: c.env.many_email ?? 1,
+			title: c.env.title ?? 'Cloud 邮箱',
+			auto_refresh_time: c.env.auto_refresh_time ?? 0,
+			register_verify: c.env.register_verify ?? 1,
+			add_email_verify: c.env.add_email_verify ?? 1,
+			login_opacity: c.env.login_opacity ?? 0.88,
+			r2_domain: c.env.r2_domain ?? '',
+			site_key: c.env.turnstile_site_key ?? '',
+			secret_key: c.env.turnstile_secret_key ?? '',
+			tg_bot_token: c.env.tg_bot_token ?? '',
+			tg_chat_id: c.env.tg_chat_id ?? '',
+			tg_bot_status: c.env.tg_bot_status ?? 1,
+			forward_email: c.env.forward_email ?? '',
+			forward_status: c.env.forward_status ?? 1,
+			rule_email: c.env.rule_email ?? '',
+			rule_type: c.env.rule_type ?? 0
+		};
+
+		// 处理 Resend Tokens
+		const resendTokens = {};
+		if (c.env.domain && Array.isArray(c.env.domain)) {
+			c.env.domain.forEach(domain => {
+				const tokenKey = `resend_token_${domain.replace(/\./g, '_')}`;
+				if (c.env[tokenKey]) {
+					resendTokens[domain] = c.env[tokenKey];
+				}
+			});
+		}
+
 		await c.env.db.prepare(`
       INSERT INTO setting (
-        register, receive, add_email, many_email, title, auto_refresh_time, register_verify, add_email_verify
+        register, receive, send, add_email, many_email, title, auto_refresh_time,
+        register_verify, add_email_verify, login_opacity, r2_domain, site_key,
+        secret_key, tg_bot_token, tg_chat_id, tg_bot_status, forward_email,
+        forward_status, rule_email, rule_type, resend_tokens
       )
-      SELECT 0, 0, 0, 1, 'Cloud 邮箱', 0, 1, 1
+      SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
       WHERE NOT EXISTS (SELECT 1 FROM setting)
-    `).run();
+    `).bind(
+			envConfig.register,
+			envConfig.receive,
+			envConfig.send,
+			envConfig.add_email,
+			envConfig.many_email,
+			envConfig.title,
+			envConfig.auto_refresh_time,
+			envConfig.register_verify,
+			envConfig.add_email_verify,
+			envConfig.login_opacity,
+			envConfig.r2_domain,
+			envConfig.site_key,
+			envConfig.secret_key,
+			envConfig.tg_bot_token,
+			envConfig.tg_chat_id,
+			envConfig.tg_bot_status,
+			envConfig.forward_email,
+			envConfig.forward_status,
+			envConfig.rule_email,
+			envConfig.rule_type,
+			JSON.stringify(resendTokens)
+		).run();
 	},
 
 	async receiveEmailToRecipient(c) {
