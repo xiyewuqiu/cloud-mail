@@ -246,6 +246,17 @@ function full() {
   height: 100%;
   gap: 10px;
   grid-template-columns: auto auto 1fr;
+
+  @media (max-width: 768px) {
+    gap: 8px;
+    font-size: 11px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 6px;
+    font-size: 10px;
+    grid-template-columns: auto 1fr;
+  }
 }
 
 .writer-box {
@@ -255,15 +266,37 @@ function full() {
   justify-content: center;
   margin-left: 5px;
   .writer {
-    width:  36px;
-    height: 36px;
-    border-radius: 50%;
+    width:  40px;
+    height: 40px;
+    border-radius: 12px;
     color: #ffffff;
-    background: linear-gradient(135deg, #1890ff, #1c6dd0);
+    background: linear-gradient(135deg, #667eea, #764ba2);
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 480px) {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+
+      &:hover {
+        transform: none;
+      }
+    }
     .writer-text {
       margin-left: 15px;
       font-size: 14px;

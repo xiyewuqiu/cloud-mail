@@ -73,88 +73,180 @@ const route = useRoute();
 <style lang="scss" scoped>
 
 .title {
-  margin: 15px 10px;
-  height: 45px;
-  border-radius: 6px;
+  margin: 20px 15px;
+  height: 60px;
+  border-radius: 16px;
   display: flex;
   position: relative;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 700;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 8px;
   color: #ffffff;
-  background: linear-gradient(135deg, #1890ff, #1c6dd0);
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+  }
 
   :deep(.el-icon) {
-    font-size: 20px;
+    font-size: 24px;
   }
 
   .user-right-icon {
     align-self: center;
     position: absolute;
     font-size: 12px;
-    right: 8px;
+    right: 12px;
     color: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    margin: 15px 10px;
+    height: 50px;
+    font-size: 16px;
+    gap: 6px;
+
+    :deep(.el-icon) {
+      font-size: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    margin: 12px 8px;
+    height: 45px;
+    font-size: 14px;
+    gap: 4px;
+    border-radius: 12px;
+
+    :deep(.el-icon) {
+      font-size: 18px;
+    }
   }
 
 }
 
 
 .manage-title {
-  margin-top: 10px;
-  padding-left: 20px;
-  color: #fff;
+  margin: 25px 0 15px 25px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .el-menu-item {
-  margin: 5px 10px !important;
-  border-radius: 6px;
-  height: 36px;
-  padding: 10px !important;
+  margin: 8px 15px !important;
+  border-radius: 12px;
+  height: 44px;
+  padding: 12px 16px !important;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  @media (max-width: 768px) {
+    margin: 6px 12px !important;
+    height: 40px;
+    padding: 10px 14px !important;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 480px) {
+    margin: 4px 8px !important;
+    height: 36px;
+    padding: 8px 12px !important;
+    border-radius: 8px;
+
+    .menu-name {
+      font-size: 13px;
+    }
+  }
 }
 
 .choose-item {
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(4px);
+  font-weight: 700;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2)) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+
+  .menu-name {
+    color: #ffffff;
+  }
 }
 
 @media (hover: hover) {
   .el-menu-item:hover {
-    background: rgba(255, 255, 255, 0.08) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    transform: translateX(4px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
 }
 
 .menu-name {
   user-select: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 
 :deep(.el-scrollbar__wrap--hidden-default ) {
-  background: #001529 !important;
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
 }
 
 :deep(.el-menu-item) {
-  background: #001529;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 :deep(.el-menu) {
-  background: #001529;
+  background: transparent;
+  border-right: none;
 }
 
 .el-menu {
   border-right: 0;
-  width: 250px;
+  width: 280px;
+  padding: 0 10px;
+
   @media (max-width: 1199px) {
-    width: 250px;
+    width: 260px;
+  }
+
+  @media (max-width: 768px) {
+    width: 240px;
+    padding: 0 8px;
+  }
+
+  @media (max-width: 480px) {
+    width: 220px;
+    padding: 0 6px;
   }
 }
 
 :deep(.el-divider__text) {
-  background: #001529;
-  color: #FFFFFF;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .scroll {

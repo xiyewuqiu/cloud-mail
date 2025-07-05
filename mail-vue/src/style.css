@@ -90,13 +90,22 @@ button, input, select, textarea {
 }
 
 :root {
-    --el-color-primary: #1890ff;
-    --el-color-primary-dark-2: #1064c0;
-    --el-color-primary-light-3: #4dabff;
-    --el-color-primary-light-5: #69c0ff;
-    --el-color-primary-light-7: #91d5ff;
-    --el-color-primary-light-9: #e6f7ff;
-    --el-text-color-regular: #333;
+    --el-color-primary: #667eea;
+    --el-color-primary-dark-2: #5a67d8;
+    --el-color-primary-light-3: #8b9cf7;
+    --el-color-primary-light-5: #a5b4fc;
+    --el-color-primary-light-7: #c7d2fe;
+    --el-color-primary-light-9: #e0e7ff;
+    --el-text-color-regular: #374151;
+
+    /* 新增现代化颜色变量 */
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 12px 40px rgba(0, 0, 0, 0.15);
+    --shadow-strong: 0 25px 50px rgba(0, 0, 0, 0.25);
 }
 
 .message-bottom {
@@ -110,20 +119,112 @@ button, input, select, textarea {
 @media (pointer: fine) and (hover: hover) {
     /* 整个滚动条 */
     ::-webkit-scrollbar {
-        width: 6px; /* 垂直滚动条宽度 */
-        height: 6px; /* 水平滚动条高度 */
+        width: 8px; /* 垂直滚动条宽度 */
+        height: 8px; /* 水平滚动条高度 */
     }
 
     /* 滚动条轨道 */
     ::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
     }
 
     /* 滚动条滑块 */
     ::-webkit-scrollbar-thumb {
-        background: #888;
+        background: linear-gradient(135deg, #667eea, #764ba2);
         border-radius: 10px;
         cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #5a67d8, #6b46c1);
+    }
+}
+
+/* 全局美化样式 */
+.el-button--primary {
+    background: var(--gradient-primary) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    transition: all 0.3s ease !important;
+}
+
+.el-button--primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4) !important;
+}
+
+.el-input__wrapper {
+    border-radius: 12px !important;
+    transition: all 0.3s ease !important;
+}
+
+.el-input__wrapper:hover {
+    border-color: var(--el-color-primary) !important;
+}
+
+.el-card {
+    border-radius: 16px !important;
+    border: 1px solid var(--glass-border) !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: var(--shadow-soft) !important;
+}
+
+/* 响应式设计优化 */
+@media (max-width: 768px) {
+    .el-button--primary {
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+        border-radius: 10px !important;
+    }
+
+    .el-input__wrapper {
+        border-radius: 10px !important;
+    }
+
+    .el-card {
+        border-radius: 12px !important;
+        margin: 8px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .el-button--primary {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        border-radius: 8px !important;
+    }
+
+    .el-input__wrapper {
+        border-radius: 8px !important;
+    }
+
+    .el-card {
+        border-radius: 8px !important;
+        margin: 4px !important;
+    }
+
+    /* 移动端触摸优化 */
+    .el-button, .el-input, .el-card {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+}
+
+/* 超小屏幕优化 */
+@media (max-width: 360px) {
+    body {
+        font-size: 13px;
+    }
+
+    .el-button--primary {
+        padding: 6px 10px !important;
+        font-size: 12px !important;
+    }
+
+    .el-input__inner {
+        font-size: 13px !important;
     }
 }

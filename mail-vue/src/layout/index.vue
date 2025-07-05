@@ -88,23 +88,57 @@ onBeforeUnmount(() => {
   top: 0;
   left: 0;
   overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
 }
 
 .main-container {
   min-height: 100%;
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  margin: 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  @media (max-width: 768px) {
+    margin: 8px;
+    border-radius: 16px;
+  }
+
+  @media (max-width: 480px) {
+    margin: 4px;
+    border-radius: 12px;
+  }
 }
 
 .el-main {
-  padding: 0;
+  padding: 20px;
+
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px;
+  }
 }
 
 .el-header {
-  background: #FFFFFF;
-  border-bottom: solid 1px var(--el-menu-border-color);
-  padding: 0 0 0 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  border-radius: 20px 20px 0 0;
+  padding: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    border-radius: 16px 16px 0 0;
+  }
+
+  @media (max-width: 480px) {
+    border-radius: 12px 12px 0 0;
+  }
 }
 
 .overlay-show {

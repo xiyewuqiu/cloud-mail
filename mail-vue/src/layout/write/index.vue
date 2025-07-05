@@ -334,23 +334,49 @@ function close() {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
 
   .write-box {
-    background: #FFFFFF;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
     width: min(1200px,calc(100% - 80px));
-    box-shadow: var(--el-box-shadow-light);
-    border: 1px solid var(--el-border-color-light);
-    transition: var(--el-transition-duration);
-    padding: 15px;
-    border-radius: 8px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    padding: 24px;
+    border-radius: 20px;
     display: grid;
     grid-template-rows: auto 1fr;
     overflow: hidden;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 35px 70px rgba(0, 0, 0, 0.3);
+    }
     @media (max-width: 1024px) {
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 10px;
+    }
+
+    @media (max-width: 768px) {
+      width: calc(100% - 16px);
+      height: calc(100% - 16px);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 8px;
+    }
+
+    @media (max-width: 480px) {
       width: 100%;
       height: 100%;
       border-radius: 0;
-      padding-top: 10px;
+      padding: 12px;
+      margin: 0;
     }
 
     @media (min-width: 1025px) {
@@ -360,36 +386,86 @@ function close() {
     .title {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      color: white;
+
       .title-left {
         align-items: center;
         display: grid;
         grid-template-columns: auto auto auto 1fr;
+        gap: 12px;
       }
+
       .title-text {
+        display: flex;
+        align-items: center;
       }
 
       .sender {
-        margin-left: 8px;
+        font-weight: 500;
+        opacity: 0.9;
       }
 
       .sender-name {
-        margin-left: 8px;
-        font-weight: bold;
+        font-weight: 700;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 4px 8px;
+        border-radius: 6px;
       }
 
       .send-email {
-        color: #999896;
-        margin-left: 5px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 13px;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
       }
 
-
       div {
         display: flex;
         align-items: center;
+      }
+
+      @media (max-width: 768px) {
+        padding: 12px 16px;
+        margin-bottom: 16px;
+        border-radius: 10px;
+
+        .title-left {
+          gap: 8px;
+          grid-template-columns: auto auto 1fr;
+        }
+
+        .sender {
+          display: none;
+        }
+
+        .send-email {
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+
+        .title-left {
+          gap: 6px;
+          grid-template-columns: auto 1fr;
+        }
+
+        .sender-name {
+          padding: 2px 6px;
+          font-size: 12px;
+        }
+
+        .send-email {
+          font-size: 11px;
+        }
       }
     }
 

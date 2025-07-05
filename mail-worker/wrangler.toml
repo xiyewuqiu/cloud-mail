@@ -34,7 +34,7 @@ crons = ["0 16 * * *"]	#定时任务每天晚上12点执行
 orm_log = false
 domain = ["djxs.xyz"]                    # 邮件域名，可配置多个
 admin = "admin@djxs.xyz"                 # 管理员邮箱
-jwt_secret = "drtygcfgtyhggh@#￥%vcghgfrtgfdtyhc"      # JWT令牌密钥
+jwt_secret = "mysecret123"      # JWT令牌密钥
 
 # 网站基础设置 (0=开启, 1=关闭)
 register = 1                             # 用户注册 (1=关闭，改为邀请制)

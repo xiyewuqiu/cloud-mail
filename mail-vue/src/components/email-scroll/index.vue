@@ -518,7 +518,7 @@ function loadData() {
 <style lang="scss" scoped>
 
 .email-container {
-  border-radius: 8px;
+  border-radius: 16px;
   display: grid;
   grid-template-rows: auto 1fr;
   padding: 0;
@@ -526,6 +526,10 @@ function loadData() {
   color: #2e2e2e;
   overflow: hidden;
   height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .scroll {
@@ -587,14 +591,44 @@ function loadData() {
 
 .email-row {
   display: flex;
-  padding: 8px 0;
+  padding: 16px 20px;
+  margin: 8px 12px;
   justify-content: space-between;
-  box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.12);
+  border-radius: 12px;
   cursor: pointer;
   align-items: center;
   position: relative;
-  transition: background 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  @media (max-width: 1199px) {
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.2);
+  }
+
+  &[data-checked="true"] {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    border-color: rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    padding: 12px 16px;
+    margin: 6px 8px;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px 12px;
+    margin: 4px 6px;
+    border-radius: 8px;
+
+    &:hover {
+      transform: none;
+    }
   }
 
   .user-info {
@@ -780,8 +814,27 @@ function loadData() {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 15px;
-  padding: 3px 15px;
-  box-shadow: inset 0 -1px 0 0 rgba(100, 121, 143, 0.12);
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  border-radius: 16px 16px 0 0;
+
+  @media (max-width: 768px) {
+    padding: 12px 16px;
+    gap: 12px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px 12px;
+    gap: 8px;
+    border-radius: 8px 8px 0 0;
+
+    .email-count {
+      font-size: 12px;
+    }
+  }
 
 
   .header-left {
