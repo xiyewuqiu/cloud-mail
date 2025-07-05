@@ -32,8 +32,8 @@ crons = ["0 16 * * *"]	#定时任务每天晚上12点执行
 [vars]
 # 基础配置
 orm_log = false
-domain = ["djss.xyz"]                    # 邮件域名，可配置多个
-admin = "admin@djss.xyz"                 # 管理员邮箱
+domain = ["djxs.xyz"]                    # 邮件域名，可配置多个
+admin = "admin@djxs.xyz"                 # 管理员邮箱
 jwt_secret = "drtygcfgtyhggh@#￥%vcghgfrtgfdtyhc"      # JWT令牌密钥
 
 # 网站基础设置 (0=开启, 1=关闭)
@@ -53,7 +53,7 @@ title = "我们群的专属邮箱"               # 网站标题
 login_opacity = 0.88                     # 登录页透明度
 
 # Resend 邮件发送配置
-resend_token_djss_xyz = "re_gmLpdfL6_4E35cnP6zR3fgZJTB2LrLvau"  # Resend API Token
+resend_token_djxs_xyz = "re_gmLpdfL6_4E35cnP6zR3fgZJTB2LrLvau"  # Resend API Token
 
 # R2 对象存储配置
 r2_domain = "https://r2.djxs.xyz"  # R2访问域名
