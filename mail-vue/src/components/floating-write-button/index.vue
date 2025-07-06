@@ -40,24 +40,36 @@ function openSend() {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--gradient-primary);
+  /* 🎨 融洽设计 - 毛玻璃悬浮按钮 */
+  background: linear-gradient(135deg,
+    rgba(37, 99, 235, 0.9) 0%,
+    rgba(29, 78, 216, 0.95) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
-    0 6px 16px rgba(37, 99, 235, 0.4),
-    0 3px 6px rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   
-  /* 🎨 悬浮效果 */
+  /* 🎨 融洽悬浮效果 */
   &:hover {
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 
-      0 8px 25px rgba(37, 99, 235, 0.5),
-      0 5px 10px rgba(0, 0, 0, 0.15);
-    background: var(--primary-blue-dark);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow:
+      0 12px 30px rgba(37, 99, 235, 0.4),
+      0 6px 12px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg,
+      rgba(29, 78, 216, 0.95) 0%,
+      rgba(30, 64, 175, 1) 100%
+    );
+    backdrop-filter: blur(25px) saturate(200%);
   }
   
   /* 📱 移动端触摸优化 */
@@ -113,33 +125,32 @@ function openSend() {
   }
 }
 
-/* 🌊 脉冲动画（可选，突出写邮件功能） */
+/* 🌊 融洽脉冲动画 - 更柔和的呼吸效果 */
 .fab-button::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
   border-radius: 50%;
-  background: var(--primary-blue);
+  background: linear-gradient(135deg,
+    rgba(37, 99, 235, 0.3) 0%,
+    rgba(16, 185, 129, 0.2) 100%
+  );
   opacity: 0;
   transform: scale(1);
-  animation: fabPulse 2s infinite;
+  animation: fabPulse 3s infinite ease-in-out;
 }
 
 @keyframes fabPulse {
-  0% {
+  0%, 100% {
     transform: scale(1);
-    opacity: 0.3;
+    opacity: 0;
   }
   50% {
-    transform: scale(1.2);
-    opacity: 0.1;
-  }
-  100% {
-    transform: scale(1.4);
-    opacity: 0;
+    transform: scale(1.15);
+    opacity: 0.4;
   }
 }
 

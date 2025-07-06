@@ -245,9 +245,30 @@ const route = useRoute();
 
 
 :deep(.el-scrollbar__wrap--hidden-default ) {
-  /* 🎨 现代邮箱侧边栏背景 */
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%) !important;
-  border-right: 1px solid rgba(226, 232, 240, 0.8);
+  /* 🎨 融洽设计 - 侧边栏背景 */
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(248, 250, 252, 0.9) 50%,
+    rgba(241, 245, 249, 0.85) 100%
+  ) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  border-right: 1px solid rgba(226, 232, 240, 0.4);
+  position: relative;
+
+  /* 🌟 添加右侧渐变过渡 */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -1px;
+    bottom: 0;
+    width: 8px;
+    background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
 }
 
 :deep(.el-menu-item) {
