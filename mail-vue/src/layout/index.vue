@@ -54,34 +54,42 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
+/* 🎭 侧边栏动画优化 - 流畅过渡 */
 .el-aside-hide {
   position: fixed;
   left: 0;
   height: 100%;
   z-index: 100;
   transform: translateX(-100%);
-  transition: all 100ms ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
 }
 
 .aside-show {
-  -webkit-box-shadow: 3px 0 5px rgba(0, 21, 41, .35);
-  box-shadow: 3px 0 5px rgba(0, 21, 41, 0.35);
+  box-shadow:
+    0 25px 50px rgba(0, 21, 41, 0.15),
+    0 10px 20px rgba(0, 21, 41, 0.1),
+    3px 0 15px rgba(99, 102, 241, 0.1);
   transform: translateX(0);
-  transition: all 100ms ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
   z-index: 101;
+
   @media (max-width: 1025px) {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 101;
     height: 100%;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-right: 1px solid rgba(226, 232, 240, 0.3);
   }
 }
 
 .el-aside {
   width: auto;
-  transition: all 100ms ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .layout {
@@ -106,6 +114,38 @@ onBeforeUnmount(() => {
     radial-gradient(circle at 50% 10%, rgba(245, 158, 11, 0.03) 0%, transparent 30%);
   /* 🎭 添加动态效果 */
   animation: backgroundShift 20s ease-in-out infinite;
+}
+
+/* 🎨 全局滚动条美化 - 现代化设计 */
+:deep(*::-webkit-scrollbar) {
+  width: 6px;
+  height: 6px;
+}
+
+:deep(*::-webkit-scrollbar-track) {
+  background: rgba(241, 245, 249, 0.3);
+  border-radius: 3px;
+}
+
+:deep(*::-webkit-scrollbar-thumb) {
+  background: linear-gradient(135deg,
+    rgba(99, 102, 241, 0.4) 0%,
+    rgba(139, 92, 246, 0.4) 100%
+  );
+  border-radius: 3px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:deep(*::-webkit-scrollbar-thumb:hover) {
+  background: linear-gradient(135deg,
+    rgba(99, 102, 241, 0.7) 0%,
+    rgba(139, 92, 246, 0.7) 100%
+  );
+  transform: scale(1.1);
+}
+
+:deep(*::-webkit-scrollbar-corner) {
+  background: transparent;
 }
 
 @keyframes backgroundShift {
@@ -273,20 +313,28 @@ onBeforeUnmount(() => {
   }
 }
 
+/* 🎭 遮罩层优化 - 现代毛玻璃效果 */
 .overlay-show {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px) saturate(180%);
   z-index: 99;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
 }
 
 .overlay-hide {
-  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
   opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>

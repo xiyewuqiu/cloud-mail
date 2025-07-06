@@ -308,8 +308,35 @@ const route = useRoute();
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* 🎨 侧边栏滚动条美化 */
 .scroll {
+  /* 🌟 自定义滚动条样式 */
+  :deep(.el-scrollbar__bar.is-vertical .el-scrollbar__thumb) {
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
+  :deep(.el-scrollbar__bar.is-vertical .el-scrollbar__thumb:hover) {
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.2) 100%
+    );
+    transform: scaleX(1.2);
+  }
+
+  :deep(.el-scrollbar__bar.is-vertical) {
+    width: 6px;
+    right: 2px;
+  }
+
+  :deep(.el-scrollbar__track.is-vertical) {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
 }
 
 .github {
