@@ -303,6 +303,7 @@ function submitRegister() {
 
 <style lang="scss" scoped>
 
+/* 🎭 表单容器优化 */
 .form-wrapper {
   position: fixed;
   right: 0;
@@ -311,44 +312,86 @@ function submitRegister() {
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: floatIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
   @media (max-width: 767px) {
     width: 100%;
+    left: 0;
+    right: 0;
+    padding: 0 12px;
   }
 }
 
+/* 🎨 超现代化登录容器 */
 .container {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(248, 250, 252, 0.95) 50%,
+    rgba(241, 245, 249, 0.92) 100%
+  );
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
   padding: 50px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 480px;
   min-height: 600px;
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15),
-              0 0 0 1px rgba(255, 255, 255, 0.2);
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 32px 64px rgba(0, 0, 0, 0.12),
+    0 16px 32px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.3);
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.2),
-                0 0 0 1px rgba(255, 255, 255, 0.3);
-  }
-
+  /* 🌟 微妙的内部纹理 */
   &::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-    border-radius: 24px 24px 0 0;
+    bottom: 0;
+    background-image:
+      radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.02) 0%, transparent 50%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  /* 🎭 顶部装饰条 */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg,
+      #667eea 0%,
+      #764ba2 25%,
+      #f093fb 50%,
+      #f5576c 75%,
+      #4facfe 100%
+    );
+    border-radius: 28px 28px 0 0;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+      0 40px 80px rgba(0, 0, 0, 0.15),
+      0 20px 40px rgba(0, 0, 0, 0.1),
+      0 10px 20px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 0 0 1px rgba(255, 255, 255, 0.4);
   }
 
   @media (max-width: 1024px) {
@@ -404,28 +447,44 @@ function submitRegister() {
       }
     }
   }
+  /* 🎨 超现代化按钮设计 */
   .btn {
-    height: 48px;
+    height: 52px;
     width: 100%;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    background: linear-gradient(135deg,
+      #667eea 0%,
+      #764ba2 25%,
+      #f093fb 50%,
+      #f5576c 75%,
+      #4facfe 100%
+    );
     border: none;
     color: white;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 16px;
-    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    box-shadow:
+      0 8px 16px rgba(102, 126, 234, 0.3),
+      0 4px 8px rgba(102, 126, 234, 0.2);
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow:
+        0 16px 32px rgba(102, 126, 234, 0.4),
+        0 8px 16px rgba(102, 126, 234, 0.3),
+        0 4px 8px rgba(102, 126, 234, 0.2);
     }
 
     &:active {
-      transform: translateY(0);
+      transform: translateY(-1px) scale(1.01);
+      transition: all 0.1s ease;
     }
 
+    /* 🌟 光泽效果 */
     &::before {
       content: '';
       position: absolute;
@@ -433,12 +492,32 @@ function submitRegister() {
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      transition: left 0.6s ease;
     }
 
     &:hover::before {
       left: 100%;
+    }
+
+    /* 🎭 内部高光 */
+    &::after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      right: 1px;
+      height: 50%;
+      background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        transparent 100%
+      );
+      border-radius: 15px 15px 0 0;
+      pointer-events: none;
     }
   }
 
@@ -450,15 +529,31 @@ function submitRegister() {
     line-height: 1.5;
   }
 
+  /* 🎨 超现代化标题设计 */
   .form-title {
-    font-weight: 700;
-    font-size: 32px !important;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-weight: 800;
+    font-size: 36px !important;
+    background: linear-gradient(135deg,
+      #667eea 0%,
+      #764ba2 25%,
+      #f093fb 50%,
+      #f5576c 75%,
+      #4facfe 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     text-align: center;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    position: relative;
+
+    /* 🌟 文字阴影效果 */
+    filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.2));
+
+    /* 🎭 动画效果 */
+    animation: titleGlow 4s ease-in-out infinite;
   }
 
   .switch {
@@ -477,21 +572,40 @@ function submitRegister() {
     }
   }
 
+  /* 🎨 超现代化输入框设计 */
   :deep(.el-input__wrapper) {
-    border-radius: 12px;
-    border: 2px solid #e5e7eb;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    border: 2px solid rgba(226, 232, 240, 0.6);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(248, 250, 252, 0.8) 100%
+    );
+    backdrop-filter: blur(10px);
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.02),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
 
     &:hover {
-      border-color: #667eea;
-      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(99, 102, 241, 0.4);
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(248, 250, 252, 0.9) 100%
+      );
+      box-shadow:
+        0 4px 8px rgba(99, 102, 241, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      transform: translateY(-1px);
     }
 
     &.is-focus {
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      border-color: rgba(99, 102, 241, 0.6);
+      box-shadow:
+        0 0 0 4px rgba(99, 102, 241, 0.1),
+        0 8px 16px rgba(99, 102, 241, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
       background: rgba(255, 255, 255, 1);
+      transform: translateY(-2px);
     }
   }
 
@@ -555,10 +669,17 @@ function submitRegister() {
 
 
 
+/* 🎨 超现代化登录背景 */
 #login-box {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(135deg,
+    #667eea 0%,
+    #764ba2 25%,
+    #f093fb 50%,
+    #f5576c 75%,
+    #4facfe 100%
+  );
   color: #333;
-  font: 100% Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -567,6 +688,7 @@ function submitRegister() {
   grid-template-columns: 1fr;
   position: relative;
 
+  /* 🌟 动态背景纹理 */
   &::before {
     content: '';
     position: absolute;
@@ -575,19 +697,85 @@ function submitRegister() {
     right: 0;
     bottom: 0;
     background:
-      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
-    animation: gradientShift 8s ease-in-out infinite;
+      radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.4) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 60% 70%, rgba(16, 185, 129, 0.2) 0%, transparent 40%);
+    animation: gradientShift 12s ease-in-out infinite;
+    z-index: 1;
+  }
+
+  /* 🎭 添加微妙的几何图案 */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px, 40px 40px;
+    animation: patternMove 20s linear infinite;
+    z-index: 1;
   }
 }
 
+/* 🎭 动画效果优化 */
 @keyframes gradientShift {
   0%, 100% {
     opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  33% {
+    opacity: 0.8;
+    transform: scale(1.05) rotate(1deg);
+  }
+  66% {
+    opacity: 0.9;
+    transform: scale(0.95) rotate(-1deg);
+  }
+}
+
+@keyframes patternMove {
+  0% {
+    background-position: 0% 0%, 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%, -100% -100%;
+  }
+}
+
+/* 🎭 新增动画效果 */
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 1;
+    transform: translateX(-100%);
   }
   50% {
     opacity: 0.8;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.4));
+  }
+}
+
+@keyframes floatIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -632,20 +820,36 @@ function submitRegister() {
   transform: scale(0.55);
 }
 
+/* 🌟 现代化云朵设计 */
 .cloud {
-  background: linear-gradient(to bottom, #fff 5%, #f1f1f1 100%);
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(248, 250, 252, 0.8) 50%,
+    rgba(241, 245, 249, 0.7) 100%
+  );
+  backdrop-filter: blur(10px);
   border-radius: 100px;
-  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   height: 120px;
   width: 350px;
   position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* 🌟 云朵装饰元素优化 */
 .cloud:after,
 .cloud:before {
   content: "";
   position: absolute;
-  background: #fff;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(248, 250, 252, 0.9) 100%
+  );
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   z-index: -1;
 }
 
@@ -655,6 +859,9 @@ function submitRegister() {
   left: 50px;
   top: -50px;
   width: 100px;
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .cloud:before {
@@ -663,6 +870,9 @@ function submitRegister() {
   width: 180px;
   right: 50px;
   top: -90px;
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 </style>
