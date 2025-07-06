@@ -518,18 +518,20 @@ function loadData() {
 <style lang="scss" scoped>
 
 .email-container {
-  border-radius: 16px;
   display: grid;
   grid-template-rows: auto 1fr;
   padding: 0;
   font-size: 14px;
-  color: #2e2e2e;
+  color: #1e293b;
   overflow: hidden;
   height: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  /* 🎨 超干净的现代背景 */
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .scroll {
@@ -591,43 +593,56 @@ function loadData() {
 
 .email-row {
   display: flex;
-  padding: 16px 20px;
-  margin: 8px 12px;
+  padding: 20px 24px;
+  margin: 12px 16px;
   justify-content: space-between;
-  border-radius: 12px;
+  border-radius: 16px;
   cursor: pointer;
   align-items: center;
   position: relative;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  /* 🎨 现代卡片设计 */
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.9);
+    background: #fafbfc;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
-    border-color: rgba(102, 126, 234, 0.2);
+    /* 🎨 现代蓝色悬浮效果 */
+    box-shadow:
+      0 8px 25px rgba(59, 130, 246, 0.15),
+      0 4px 10px rgba(0, 0, 0, 0.1);
+    border-color: #e0e7ff;
   }
 
   &[data-checked="true"] {
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-    border-color: rgba(102, 126, 234, 0.3);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    /* 🎨 现代蓝色选中状态 */
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-color: #93c5fd;
+    box-shadow:
+      0 4px 15px rgba(59, 130, 246, 0.2),
+      0 2px 6px rgba(0, 0, 0, 0.1);
   }
 
   @media (max-width: 768px) {
-    padding: 12px 16px;
-    margin: 6px 8px;
-    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 8px 12px;
+    border-radius: 14px;
   }
 
   @media (max-width: 480px) {
-    padding: 10px 12px;
-    margin: 4px 6px;
-    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 6px 8px;
+    border-radius: 12px;
 
     &:hover {
-      transform: none;
+      transform: translateY(-1px);
+      box-shadow:
+        0 4px 12px rgba(59, 130, 246, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.05);
     }
   }
 
@@ -637,7 +652,7 @@ function loadData() {
     column-gap: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
-    color: rgba(25, 41, 59, 0.4);
+    color: #94a3b8;
 
     .user, .account {
       overflow: hidden;
@@ -661,9 +676,25 @@ function loadData() {
 
   .el-checkbox {
     display: flex;
-    padding-left: 15px;
-    padding-right: 20px;
+    padding-left: 16px;
+    padding-right: 24px;
     justify-content: center;
+
+    /* 📱 移动端触摸优化 */
+    @media (max-width: 768px) {
+      padding-left: 12px;
+      padding-right: 20px;
+
+      /* 增大触摸区域 */
+      :deep(.el-checkbox__input) {
+        transform: scale(1.2);
+      }
+    }
+
+    @media (max-width: 480px) {
+      padding-left: 8px;
+      padding-right: 16px;
+    }
   }
 
   .title-column {
@@ -686,8 +717,8 @@ function loadData() {
     }
 
     .email-sender {
-      font-weight: bold;
-      color: #1a1a1a;
+      font-weight: 600;
+      color: #0f172a;
       display: grid;
       grid-template-columns: auto 1fr auto;
 
@@ -715,9 +746,9 @@ function loadData() {
       }
 
       .phone-time {
-        font-weight: normal;
+        font-weight: 400;
         font-size: 12px;
-        color: #333 !important;
+        color: #64748b !important;
         @media (min-width: 1200px) {
           display: none;
         }
@@ -725,7 +756,7 @@ function loadData() {
     }
 
     .email-text {
-      color: #333;
+      color: #475569;
       display: grid;
       grid-template-columns: auto 1fr;
       @media (max-width: 1199px) {
@@ -743,7 +774,7 @@ function loadData() {
         white-space: nowrap;
         text-overflow: ellipsis;
         padding-left: 10px;
-        color: rgba(25, 41, 59, 0.4);
+        color: #94a3b8;
         @media (max-width: 1199px) {
           padding-left: 0;
           margin-top: 0;
@@ -758,22 +789,16 @@ function loadData() {
     font-size: 12px;
     white-space: nowrap;
     display: flex;
-    padding-left: 15px;
+    padding-left: 20px;
     align-items: center;
-    color: #333;
+    color: #64748b;
+    font-weight: 500;
     @media (max-width: 1199px) {
       display: none;
     }
   }
 
-  &:hover {
-    background-color: #F2F6FC;
-    z-index: 0;
-  }
-
-  /*&[data-checked="true"] {
-    background-color: #c2dbff;
-  }*/
+  /* 旧的悬浮效果已被上面的现代设计替代 */
 }
 
 
@@ -783,7 +808,17 @@ function loadData() {
 
 .pc-star {
   display: flex;
-  width: 40px;
+  width: 44px;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #f1f5f9;
+    transform: scale(1.1);
+  }
 }
 
 @media (max-width: 1024px) {
@@ -793,8 +828,14 @@ function loadData() {
   .phone-star {
     display: block;
     align-self: end;
-    padding-right: 16px;
-    padding-top: 8px;
+    padding: 12px 20px 8px 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+
+    &:active {
+      background: #f1f5f9;
+      transform: scale(0.95);
+    }
   }
   .star-pd {
     padding-top: 6px !important;
@@ -813,23 +854,21 @@ function loadData() {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 15px;
-  padding: 16px 20px;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-  border-radius: 16px 16px 0 0;
+  gap: 20px;
+  padding: 20px 24px;
+  /* 🎨 超干净的现代头部 */
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  /* 去掉圆角，让界面更整洁 */
 
   @media (max-width: 768px) {
-    padding: 12px 16px;
-    gap: 12px;
-    border-radius: 12px 12px 0 0;
+    padding: 16px 20px;
+    gap: 16px;
   }
 
   @media (max-width: 480px) {
-    padding: 10px 12px;
-    gap: 8px;
-    border-radius: 8px 8px 0 0;
+    padding: 12px 16px;
+    gap: 12px;
 
     .email-count {
       font-size: 12px;
@@ -841,9 +880,8 @@ function loadData() {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    column-gap: 15px;
+    column-gap: 16px;
     row-gap: 8px;
-    padding-left: 2px;
   }
 
   .header-right {
@@ -859,8 +897,22 @@ function loadData() {
   }
 
   .icon {
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
+    color: #64748b;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #3b82f6;
+      background: #f1f5f9;
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
   }
 
   .more-icon {
