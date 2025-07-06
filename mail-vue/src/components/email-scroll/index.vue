@@ -897,15 +897,22 @@ function loadData() {
   }
 
   .icon {
-    font-size: 20px;
+    font-size: 20px !important;
     cursor: pointer;
-    color: #64748b;
+    color: #1f2937 !important; /* 🐛 修复：使用更深的颜色确保可见 */
     padding: 8px;
     border-radius: 8px;
     transition: all 0.2s ease;
+    opacity: 1 !important; /* 🐛 修复：确保不透明 */
+    visibility: visible !important; /* 🐛 修复：确保可见 */
+    display: inline-block !important; /* 🐛 修复：强制显示 */
+    width: auto !important;
+    height: auto !important;
+    position: relative !important;
+    z-index: 10 !important;
 
     &:hover {
-      color: #3b82f6;
+      color: #3b82f6 !important;
       background: #f1f5f9;
       transform: scale(1.05);
     }

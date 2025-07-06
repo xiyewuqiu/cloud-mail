@@ -163,9 +163,18 @@ button, input, select, textarea {
 .message-bottom {
     top: auto !important;
     bottom: 20px !important;
+    /* 🐛 修复：只隐藏消息底部的图标，不影响其他图标 */
     .el-icon {
         display: none !important;
     }
+}
+
+/* 🐛 修复：确保邮件操作图标正常显示 */
+.header-actions .icon,
+.header-left .icon {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 @media (pointer: fine) and (hover: hover) {
