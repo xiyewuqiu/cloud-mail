@@ -13,7 +13,7 @@
       <div class="email">
         <span>{{ userStore.user.email }}</span>
       </div>
-      <el-dropdown :teleported="false" popper-class="detail-dropdown" >
+      <el-dropdown :teleported="true" popper-class="detail-dropdown" >
         <div class="avatar">
           <div class="avatar-text">
             <div>{{ formatName(userStore.user.email) }}</div>
@@ -153,6 +153,18 @@ function full() {
   font-weight: bold;
   font-size: 14px;
   white-space: nowrap;
+  color: var(--neutral-700);
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 :deep(.el-popper.is-pure) {
@@ -246,15 +258,20 @@ function full() {
   height: 100%;
   gap: 10px;
   grid-template-columns: auto auto 1fr;
+  padding: 0 20px;
+  align-items: center;
 
   @media (max-width: 768px) {
     gap: 8px;
     font-size: 11px;
+    padding: 0 16px;
+    grid-template-columns: auto 1fr;
   }
 
   @media (max-width: 480px) {
     gap: 6px;
     font-size: 10px;
+    padding: 0 12px;
     grid-template-columns: auto 1fr;
   }
 }
@@ -265,6 +282,14 @@ function full() {
   align-items: center;
   justify-content: center;
   margin-left: 5px;
+
+  @media (max-width: 768px) {
+    margin-left: 4px;
+  }
+
+  @media (max-width: 480px) {
+    margin-left: 2px;
+  }
   .writer {
     width:  40px;
     height: 40px;
@@ -311,6 +336,15 @@ function full() {
   display: inline-flex;
   align-items: center;
   height: 100%;
+  gap: 8px;
+
+  @media (max-width: 768px) {
+    gap: 6px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 4px;
+  }
 }
 
 
@@ -319,8 +353,21 @@ function full() {
   display: grid;
   grid-template-columns: 1fr auto auto;
   margin-left: auto;
+  align-items: center;
+  gap: 8px;
+
   @media (max-width: 1024px) {
     grid-template-columns: 1fr auto;
+  }
+
+  @media (max-width: 768px) {
+    gap: 6px;
+    grid-template-columns: auto auto;
+  }
+
+  @media (max-width: 480px) {
+    gap: 4px;
+    grid-template-columns: auto;
   }
   .full {
     display: flex;
@@ -341,6 +388,16 @@ function full() {
     text-overflow: ellipsis;
     font-weight: bold;
     width: 100%;
+
+    @media (max-width: 768px) {
+      font-size: 12px;
+      margin-right: 8px;
+      max-width: 120px;
+    }
+
+    @media (max-width: 480px) {
+      display: none; /* 超小屏幕隐藏邮箱地址 */
+    }
   }
 
   .avatar {
@@ -372,5 +429,16 @@ function full() {
 }
 .el-tooltip__trigger:first-child:focus-visible {
   outline: unset;
+}
+
+/* 🎯 修复个人信息面板层级问题 */
+:deep(.detail-dropdown) {
+  z-index: 9999 !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid var(--neutral-200) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(20px) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
 }
 </style>

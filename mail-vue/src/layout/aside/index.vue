@@ -109,10 +109,10 @@ const route = useRoute();
   }
 
   @media (max-width: 768px) {
-    margin: 15px 10px;
-    height: 50px;
+    margin: 12px 8px;
+    height: 52px;
     font-size: 16px;
-    gap: 6px;
+    gap: 8px;
 
     :deep(.el-icon) {
       font-size: 20px;
@@ -120,14 +120,26 @@ const route = useRoute();
   }
 
   @media (max-width: 480px) {
-    margin: 12px 8px;
-    height: 45px;
-    font-size: 14px;
-    gap: 4px;
-    border-radius: 12px;
+    margin: 10px 6px;
+    height: 48px;
+    font-size: 15px;
+    gap: 6px;
+    border-radius: 10px;
 
     :deep(.el-icon) {
       font-size: 18px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    margin: 8px 4px;
+    height: 44px;
+    font-size: 14px;
+    gap: 4px;
+    border-radius: 8px;
+
+    :deep(.el-icon) {
+      font-size: 16px;
     }
   }
 
@@ -169,17 +181,28 @@ const route = useRoute();
   }
 
   @media (max-width: 768px) {
-    margin: 6px 12px !important;
-    height: 40px;
-    padding: 10px 14px !important;
+    margin: 6px 10px !important;
+    height: 44px;
+    padding: 12px 16px !important;
     border-radius: 10px;
   }
 
   @media (max-width: 480px) {
     margin: 4px 8px !important;
+    height: 40px;
+    padding: 10px 14px !important;
+    border-radius: 8px;
+
+    .menu-name {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    margin: 3px 6px !important;
     height: 36px;
     padding: 8px 12px !important;
-    border-radius: 8px;
+    border-radius: 6px;
 
     .menu-name {
       font-size: 13px;

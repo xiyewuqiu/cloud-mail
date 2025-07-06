@@ -289,6 +289,51 @@ button, input, select, textarea {
     }
 }
 
+/* 📱 移动端专用优化 */
+@media (max-width: 768px) {
+    /* 触摸优化 */
+    .el-button, .el-input, .el-card, [role="button"] {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        min-height: 44px; /* iOS推荐的最小触摸目标 */
+    }
+
+    /* 文字选择优化 */
+    .mail-list-item, .el-menu-item {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    /* 滚动优化 */
+    .el-scrollbar__wrap {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 更紧凑的布局 */
+    .el-button--primary {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        min-height: 40px !important;
+    }
+
+    .el-input__wrapper {
+        min-height: 40px !important;
+    }
+
+    /* 优化卡片间距 */
+    .el-card {
+        margin: 4px 0 !important;
+    }
+
+    /* 优化菜单项高度 */
+    .el-menu-item {
+        min-height: 44px !important;
+        line-height: 44px !important;
+    }
+}
+
 /* 超小屏幕优化 */
 @media (max-width: 360px) {
     body {
@@ -298,9 +343,21 @@ button, input, select, textarea {
     .el-button--primary {
         padding: 6px 10px !important;
         font-size: 12px !important;
+        min-height: 36px !important;
+    }
+
+    .el-input__wrapper {
+        min-height: 36px !important;
     }
 
     .el-input__inner {
+        font-size: 13px !important;
+    }
+
+    /* 极小屏幕的特殊处理 */
+    .el-menu-item {
+        min-height: 40px !important;
+        line-height: 40px !important;
         font-size: 13px !important;
     }
 }

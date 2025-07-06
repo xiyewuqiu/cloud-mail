@@ -126,11 +126,15 @@ onBeforeUnmount(() => {
   padding: 20px;
 
   @media (max-width: 768px) {
-    padding: 16px;
+    padding: 12px;
   }
 
   @media (max-width: 480px) {
-    padding: 12px;
+    padding: 8px;
+  }
+
+  @media (max-width: 360px) {
+    padding: 6px;
   }
 }
 
