@@ -1,9 +1,16 @@
 <template>
-  <div class="floating-write-button" @click="openSend">
-    <div class="fab-button">
-      <Icon icon="material-symbols:edit-outline-sharp" class="fab-icon" />
+  <!-- 💌 智能隐藏：当邮件撰写界面打开时自动隐藏悬浮按钮 -->
+  <Transition name="fab-fade" mode="out-in">
+    <div
+      v-show="!uiStore.isWriterOpen"
+      class="floating-write-button"
+      @click="openSend"
+    >
+      <div class="fab-button">
+        <Icon icon="material-symbols:edit-outline-sharp" class="fab-icon" />
+      </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <script setup>
@@ -164,10 +171,26 @@ function openSend() {
 @supports (bottom: env(safe-area-inset-bottom)) {
   .floating-write-button {
     bottom: calc(20px + env(safe-area-inset-bottom));
-    
+
     @media (max-width: 768px) {
       bottom: calc(24px + env(safe-area-inset-bottom));
     }
   }
+}
+
+/* 💫 智能隐藏过渡动画 */
+.fab-fade-enter-active,
+.fab-fade-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab-fade-enter-from {
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+}
+
+.fab-fade-leave-to {
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
 }
 </style>
