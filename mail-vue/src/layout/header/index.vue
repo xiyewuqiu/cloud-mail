@@ -171,80 +171,142 @@ function full() {
 }
 
 .user-details {
-  width: 250px;
+  width: 280px;
   font-size: 14px;
-  color: #333;
+  color: var(--neutral-700);
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;
+  /* 🎨 现代化用户面板背景 */
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow:
+    0 20px 25px rgba(0, 0, 0, 0.1),
+    0 10px 10px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(226, 232, 240, 0.8);
   .user-name {
-    font-weight: bold;
-    margin-top: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-    width: 250px;
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 12px;
+    color: var(--neutral-900);
+    text-align: center;
+    max-width: 240px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    text-align: center;
   }
   .detail-user-type {
-    margin-top: 10px;
+    margin-top: 16px;
+
+    .el-tag {
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
   }
 
   .action-info {
     width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    background: rgba(37, 99, 235, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(37, 99, 235, 0.1);
+
     display: grid;
     grid-template-columns: auto auto;
-    margin-top: 10px;
+    gap: 16px;
+
     >div:first-child {
       display: grid;
-      align-items: center;
-      gap: 10px;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--neutral-600);
+      font-weight: 500;
     }
     >div:last-child {
       display: grid;
-      gap: 10px;
-      text-align: center;
+      gap: 8px;
+      text-align: right;
+
       >div {
         display: flex;
         align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+
+        .el-tag {
+          font-size: 11px;
+          padding: 2px 8px;
+          border-radius: 6px;
+          font-weight: 500;
+        }
       }
     }
   }
 
   .detail-email {
-    padding-left: 20px;
-    padding-right: 20px;
-    width: 250px;
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--neutral-500);
+    text-align: center;
+    max-width: 240px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    text-align: center;
-    color: #5c5958;
+    background: var(--neutral-100);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--neutral-200);
   }
   .logout {
-    margin-top: 20px;
+    margin-top: 24px;
     width: 100%;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
+
     .el-button {
-      border-radius: 6px;
-      height: 28px;
       width: 100%;
+      height: 44px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      border: none;
+      color: white;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:hover {
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
     }
   }
   .details-avatar {
-    margin-top: 20px;
-    height: 40px;
-    width: 40px;
-    border: 1px solid #ccc;
-    font-size: 18px;
+    margin-top: 0;
+    height: 64px;
+    width: 64px;
+    background: var(--gradient-primary);
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow:
+      0 8px 16px rgba(37, 99, 235, 0.3),
+      0 0 0 1px rgba(37, 99, 235, 0.1);
   }
 }
 
@@ -400,11 +462,58 @@ function full() {
 /* 🎯 修复个人信息面板层级问题 */
 :deep(.detail-dropdown) {
   z-index: 9999 !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08) !important;
-  border: 1px solid var(--neutral-200) !important;
-  border-radius: 12px !important;
+  box-shadow:
+    0 20px 25px rgba(0, 0, 0, 0.1),
+    0 10px 10px rgba(0, 0, 0, 0.04) !important;
+  border: none !important;
+  border-radius: 16px !important;
   overflow: hidden !important;
   backdrop-filter: blur(20px) !important;
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: transparent !important;
+  padding: 0 !important;
+
+  /* 🎭 进入动画 */
+  animation: dropdownSlideIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 🎨 用户信息面板额外美化 */
+.user-details {
+  /* 添加微妙的渐变边框 */
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    border-radius: 16px 16px 0 0;
+  }
+
+  /* 添加底部装饰线 */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--neutral-200);
+    border-radius: 2px;
+  }
 }
 </style>
