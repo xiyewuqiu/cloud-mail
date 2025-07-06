@@ -4,11 +4,9 @@
       <div class="title">
         <div class="title-left">
           <span class="title-text">
-            <Icon icon="hugeicons:quill-write-01" width="28" height="28" />
+            <Icon icon="hugeicons:quill-write-01" width="24" height="24" />
           </span>
-          <span class="sender">发件人:</span>
-          <span class="sender-name">{{form.name}}</span>
-          <span class="send-email"><{{form.sendEmail}}></span>
+          <span class="title-label">撰写邮件</span>
         </div>
         <div @click="close" class="close-button">
           <Icon icon="material-symbols-light:close-rounded" width="20" height="20"/>
@@ -418,28 +416,16 @@ function close() {
       justify-content: space-between;
       align-items: center;
       margin-bottom: 24px;
-      padding: 20px 24px;
-      /* 🎨 现代简洁设计 - 纯白背景 + 微妙边框 */
+      padding: 16px 20px;
+      /* 🎨 更简洁的头部设计 */
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
+      border-bottom: 1px solid #e2e8f0;
       color: #1e293b;
-      /* 🌟 微妙阴影提升层次感 */
-      box-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.05),
-        0 1px 2px rgba(0, 0, 0, 0.1);
-      transition: all 0.2s ease;
-
-      &:hover {
-        box-shadow:
-          0 4px 6px rgba(0, 0, 0, 0.05),
-          0 2px 4px rgba(0, 0, 0, 0.1);
-      }
 
       .title-left {
         align-items: center;
         display: flex;
-        gap: 16px;
+        gap: 12px;
         flex: 1;
       }
 
@@ -448,38 +434,13 @@ function close() {
         align-items: center;
         /* 🎨 现代蓝色图标 */
         color: #3b82f6;
-        margin-right: 4px;
       }
 
-      .sender {
-        font-weight: 500;
-        color: #64748b;
-        font-size: 14px;
-      }
-
-      .sender-name {
+      .title-label {
         font-weight: 600;
         color: #1e293b;
-        /* 🎨 现代标签设计 */
-        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-        padding: 6px 12px;
-        border-radius: 8px;
-        border: 1px solid #e2e8f0;
-        font-size: 14px;
-      }
-
-      .send-email {
-        color: #64748b;
-        font-size: 13px;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        /* 🎨 现代邮箱地址样式 */
-        background: #f8fafc;
-        padding: 4px 8px;
-        border-radius: 6px;
-        border: 1px solid #f1f5f9;
-        font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+        font-size: 16px;
+        /* 🎨 简洁标题样式 */
       }
 
       /* 🎨 现代关闭按钮 */
@@ -510,27 +471,11 @@ function close() {
 
       /* 📱 移动端优化 */
       @media (max-width: 768px) {
-        padding: 16px 20px;
+        padding: 12px 16px;
         margin-bottom: 20px;
-        border-radius: 12px;
 
-        .title-left {
-          gap: 12px;
-          flex-wrap: wrap;
-        }
-
-        .sender {
-          display: none;
-        }
-
-        .sender-name {
-          font-size: 13px;
-          padding: 4px 8px;
-        }
-
-        .send-email {
-          font-size: 12px;
-          padding: 3px 6px;
+        .title-label {
+          font-size: 15px;
         }
 
         .close-button {
@@ -541,34 +486,16 @@ function close() {
 
       /* 📱 小屏幕优化 */
       @media (max-width: 480px) {
-        padding: 12px 16px;
+        padding: 10px 12px;
         margin-bottom: 16px;
-        border-radius: 10px;
-        position: relative;
 
-        .title-left {
-          gap: 8px;
-          flex-direction: column;
-          align-items: flex-start;
-          padding-right: 40px; /* 为关闭按钮留出空间 */
-        }
-
-        .sender-name {
-          padding: 3px 6px;
-          font-size: 12px;
-        }
-
-        .send-email {
-          font-size: 11px;
-          padding: 2px 4px;
+        .title-label {
+          font-size: 14px;
         }
 
         .close-button {
           width: 24px;
           height: 24px;
-          position: absolute;
-          top: 12px;
-          right: 16px;
         }
       }
     }
