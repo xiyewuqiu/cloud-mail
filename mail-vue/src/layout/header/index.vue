@@ -4,11 +4,7 @@
       <hanburger @click="changeAside"></hanburger>
       <span class="breadcrumb-item">{{ route.meta.title }}</span>
     </div>
-    <div class="writer-box" @click="openSend">
-      <div class="writer" >
-        <Icon icon="material-symbols:edit-outline-sharp" width="22" height="22" />
-      </div>
-    </div>
+    <!-- 📱 移动端头部简化 - 写邮件按钮移至悬浮位置 -->
     <div class="toolbar">
       <div class="email">
         <span>{{ userStore.user.email }}</span>
@@ -150,18 +146,21 @@ function full() {
 <style lang="scss" scoped>
 
 .breadcrumb-item {
-  font-weight: bold;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 16px;
   white-space: nowrap;
-  color: var(--neutral-700);
+  color: var(--neutral-800);
 
   @media (max-width: 768px) {
-    font-size: 13px;
+    /* 📱 移动端标题优化 */
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--neutral-900);
   }
 
   @media (max-width: 480px) {
-    font-size: 12px;
-    max-width: 100px;
+    font-size: 17px;
+    max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -257,80 +256,32 @@ function full() {
   display: grid;
   height: 100%;
   gap: 10px;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto 1fr auto;
   padding: 0 20px;
   align-items: center;
 
   @media (max-width: 768px) {
-    gap: 8px;
-    font-size: 11px;
+    /* 📱 移动端头部优化 - 标准56px高度 */
+    height: 56px;
+    gap: 12px;
+    font-size: 14px;
     padding: 0 16px;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
   }
 
   @media (max-width: 480px) {
-    gap: 6px;
-    font-size: 10px;
+    height: 56px;
+    gap: 8px;
+    font-size: 14px;
     padding: 0 12px;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
   }
 }
 
-.writer-box {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 5px;
-
-  @media (max-width: 768px) {
-    margin-left: 4px;
-  }
-
-  @media (max-width: 480px) {
-    margin-left: 2px;
-  }
-  .writer {
-    width:  40px;
-    height: 40px;
-    border-radius: 10px;
-    color: #ffffff;
-    /* 🎨 现代写邮件按钮 */
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
-
-    &:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
-      background: linear-gradient(135deg, #1d4ed8, #1e40af);
-    }
-
-    @media (max-width: 768px) {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-    }
-
-    @media (max-width: 480px) {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-
-      &:hover {
-        transform: none;
-      }
-    }
-    .writer-text {
-      margin-left: 15px;
-      font-size: 14px;
-      font-weight: bold;
-    }
-  }
-}
+/* 📱 写邮件按钮样式已移至悬浮组件 */
 
 .header-btn {
   display: inline-flex;
@@ -405,24 +356,39 @@ function full() {
     align-items: center;
     cursor: pointer;
     margin-left: 10px;
+
     .avatar-text {
-      height: 30px;
-      width: 30px;
+      height: 32px;
+      width: 32px;
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+      border-radius: 50%;
+      border: 2px solid var(--primary-blue);
+      background: var(--gradient-primary);
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+
+      @media (max-width: 768px) {
+        height: 36px;
+        width: 36px;
+        font-size: 15px;
+      }
     }
 
     .setting-icon {
-      position: relative;
-      top: 0;
-      margin-right: 5px;
-      bottom: 10px;
-      @media (max-width: 1024px) {
-        margin-right: 10px;
+      margin-left: 4px;
+      color: var(--neutral-600);
+      transition: all 0.2s ease;
+
+      @media (max-width: 768px) {
+        margin-left: 6px;
       }
+    }
+
+    &:hover .setting-icon {
+      color: var(--primary-blue);
     }
   }
 

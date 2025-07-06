@@ -19,6 +19,8 @@
     </el-container>
   </el-container>
   <writer ref="writerRef" />
+  <!-- 📱 悬浮写邮件按钮 -->
+  <floating-write-button />
 </template>
 
 <script setup>
@@ -28,6 +30,7 @@ import Main from '@/layout/main/index.vue'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import {useUiStore} from "@/store/ui.js";
 import writer from '@/layout/write/index.vue'
+import FloatingWriteButton from '@/components/floating-write-button/index.vue'
 
 const uiStore = useUiStore();
 const writerRef = ref({})
@@ -149,6 +152,7 @@ onBeforeUnmount(() => {
     0 1px 3px rgba(0, 0, 0, 0.1),
     0 1px 2px rgba(0, 0, 0, 0.06);
   position: relative;
+  height: 64px;
 
   /* 添加顶部高光效果 */
   &::before {
@@ -162,10 +166,16 @@ onBeforeUnmount(() => {
   }
 
   @media (max-width: 768px) {
+    /* 📱 移动端标准头部高度 */
+    height: 56px;
     border-radius: 12px 12px 0 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
   }
 
   @media (max-width: 480px) {
+    height: 56px;
     border-radius: 10px 10px 0 0;
   }
 }
