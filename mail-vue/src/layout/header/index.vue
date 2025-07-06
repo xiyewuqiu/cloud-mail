@@ -268,18 +268,20 @@ function full() {
   .writer {
     width:  40px;
     height: 40px;
-    border-radius: 12px;
+    border-radius: 10px;
     color: #ffffff;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    transition: all 0.3s ease;
+    /* 🎨 现代写邮件按钮 */
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
     }
 
     @media (max-width: 768px) {

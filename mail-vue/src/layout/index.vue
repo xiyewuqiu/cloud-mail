@@ -88,27 +88,37 @@ onBeforeUnmount(() => {
   top: 0;
   left: 0;
   overflow: hidden;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  /* 🎨 现代邮箱服务背景 - 清新专业 */
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+  /* 添加微妙的纹理效果 */
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
 }
 
 .main-container {
   min-height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  /* 🪟 现代玻璃态主容器 */
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  margin: 10px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 20px 25px rgba(0, 0, 0, 0.1),
+    0 10px 10px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
   @media (max-width: 768px) {
     margin: 8px;
-    border-radius: 16px;
+    border-radius: 12px;
   }
 
   @media (max-width: 480px) {
-    margin: 4px;
-    border-radius: 12px;
+    margin: 6px;
+    border-radius: 10px;
   }
 }
 
@@ -125,19 +135,34 @@ onBeforeUnmount(() => {
 }
 
 .el-header {
-  background: rgba(255, 255, 255, 0.95);
+  /* 🎯 现代邮箱头部设计 */
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-  border-radius: 20px 20px 0 0;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 16px 16px 0 0;
   padding: 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+  position: relative;
+
+  /* 添加顶部高光效果 */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.3), transparent);
+  }
 
   @media (max-width: 768px) {
-    border-radius: 16px 16px 0 0;
+    border-radius: 12px 12px 0 0;
   }
 
   @media (max-width: 480px) {
-    border-radius: 12px 12px 0 0;
+    border-radius: 10px 10px 0 0;
   }
 }
 

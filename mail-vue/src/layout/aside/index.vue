@@ -75,22 +75,25 @@ const route = useRoute();
 .title {
   margin: 20px 15px;
   height: 60px;
-  border-radius: 16px;
+  border-radius: 12px;
   display: flex;
   position: relative;
   font-size: 18px;
   font-weight: 700;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  color: #ffffff;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  transition: all 0.4s ease;
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  gap: 10px;
+  /* 🎨 现代邮箱品牌标题 */
+  color: #2563eb;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 2px solid rgba(37, 99, 235, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15);
+    border-color: rgba(37, 99, 235, 0.2);
   }
 
   :deep(.el-icon) {
@@ -133,11 +136,12 @@ const route = useRoute();
 
 .manage-title {
   margin: 25px 0 15px 25px;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 13px;
+  /* 🎯 现代邮箱分组标题 */
+  color: #6b7280;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .el-menu-item {
@@ -184,22 +188,29 @@ const route = useRoute();
 }
 
 .choose-item {
-  font-weight: 700;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2)) !important;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+  font-weight: 600;
+  /* 🎯 现代邮箱选中状态 */
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.05)) !important;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
 
   .menu-name {
-    color: #ffffff;
+    color: #2563eb;
+    font-weight: 600;
+  }
+
+  :deep(.iconify) {
+    color: #2563eb;
   }
 }
 
 @media (hover: hover) {
   .el-menu-item:hover {
-    background: rgba(255, 255, 255, 0.12) !important;
-    transform: translateX(4px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    /* 🎨 现代邮箱菜单悬停效果 */
+    background: rgba(37, 99, 235, 0.05) !important;
+    transform: translateX(2px);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+    border: 1px solid rgba(37, 99, 235, 0.1);
   }
 }
 
@@ -211,12 +222,16 @@ const route = useRoute();
 
 
 :deep(.el-scrollbar__wrap--hidden-default ) {
-  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+  /* 🎨 现代邮箱侧边栏背景 */
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%) !important;
+  border-right: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 :deep(.el-menu-item) {
   background: transparent;
-  color: rgba(255, 255, 255, 0.9);
+  /* 🎯 现代邮箱菜单文字颜色 */
+  color: #374151;
+  font-weight: 500;
 }
 
 :deep(.el-menu) {

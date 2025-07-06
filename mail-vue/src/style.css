@@ -1,4 +1,7 @@
 
+/* 🎨 现代邮箱服务主题导入 */
+@import url('./styles/modern-mail-theme.css');
+
 * {
     margin: 0;
     padding: 0;
@@ -90,22 +93,71 @@ button, input, select, textarea {
 }
 
 :root {
-    --el-color-primary: #667eea;
-    --el-color-primary-dark-2: #5a67d8;
-    --el-color-primary-light-3: #8b9cf7;
-    --el-color-primary-light-5: #a5b4fc;
-    --el-color-primary-light-7: #c7d2fe;
-    --el-color-primary-light-9: #e0e7ff;
-    --el-text-color-regular: #374151;
+    /* 🎨 全新邮箱服务配色方案 - 清新专业风格 */
+    --el-color-primary: #2563eb;
+    --el-color-primary-dark-2: #1d4ed8;
+    --el-color-primary-light-3: #60a5fa;
+    --el-color-primary-light-5: #93c5fd;
+    --el-color-primary-light-7: #bfdbfe;
+    --el-color-primary-light-9: #dbeafe;
+    --el-text-color-regular: #1f2937;
 
-    /* 新增现代化颜色变量 */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --glass-bg: rgba(255, 255, 255, 0.95);
-    --glass-border: rgba(255, 255, 255, 0.3);
-    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.1);
-    --shadow-medium: 0 12px 40px rgba(0, 0, 0, 0.15);
-    --shadow-strong: 0 25px 50px rgba(0, 0, 0, 0.25);
+    /* 🌟 现代邮箱服务主题色彩 */
+    --primary-blue: #2563eb;
+    --primary-blue-light: #3b82f6;
+    --primary-blue-dark: #1d4ed8;
+    --accent-green: #10b981;
+    --accent-orange: #f59e0b;
+    --accent-red: #ef4444;
+    --neutral-50: #f9fafb;
+    --neutral-100: #f3f4f6;
+    --neutral-200: #e5e7eb;
+    --neutral-300: #d1d5db;
+    --neutral-400: #9ca3af;
+    --neutral-500: #6b7280;
+    --neutral-600: #4b5563;
+    --neutral-700: #374151;
+    --neutral-800: #1f2937;
+    --neutral-900: #111827;
+
+    /* 🎯 专业渐变效果 */
+    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    --gradient-secondary: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    --gradient-subtle: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+
+    /* 🪟 现代玻璃态效果 */
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-bg-dark: rgba(255, 255, 255, 0.95);
+    --glass-border: rgba(37, 99, 235, 0.1);
+    --glass-border-light: rgba(255, 255, 255, 0.2);
+
+    /* 🌊 精致阴影系统 */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+
+    /* 📧 邮箱专用色彩 */
+    --mail-unread: #2563eb;
+    --mail-read: #6b7280;
+    --mail-important: #ef4444;
+    --mail-starred: #f59e0b;
+    --mail-draft: #8b5cf6;
+    --mail-sent: #10b981;
+
+    /* 🎨 状态色彩 */
+    --success-bg: #ecfdf5;
+    --success-border: #10b981;
+    --warning-bg: #fffbeb;
+    --warning-border: #f59e0b;
+    --error-bg: #fef2f2;
+    --error-border: #ef4444;
+    --info-bg: #eff6ff;
+    --info-border: #2563eb;
 }
 
 .message-bottom {
@@ -117,59 +169,83 @@ button, input, select, textarea {
 }
 
 @media (pointer: fine) and (hover: hover) {
-    /* 整个滚动条 */
+    /* 🎨 现代化滚动条设计 */
     ::-webkit-scrollbar {
-        width: 8px; /* 垂直滚动条宽度 */
-        height: 8px; /* 水平滚动条高度 */
+        width: 6px; /* 更细的滚动条 */
+        height: 6px;
     }
 
     /* 滚动条轨道 */
     ::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
+        background: var(--neutral-100);
+        border-radius: 8px;
     }
 
     /* 滚动条滑块 */
     ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-radius: 10px;
+        background: var(--gradient-primary);
+        border-radius: 8px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #5a67d8, #6b46c1);
+        background: var(--primary-blue-dark);
+        transform: scaleY(1.1);
     }
 }
 
-/* 全局美化样式 */
+/* 🎨 现代邮箱服务组件样式 */
 .el-button--primary {
     background: var(--gradient-primary) !important;
     border: none !important;
-    border-radius: 12px !important;
-    transition: all 0.3s ease !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.025em !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: var(--shadow-sm) !important;
 }
 
 .el-button--primary:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: var(--shadow-lg) !important;
+    background: var(--primary-blue-dark) !important;
+}
+
+.el-button--primary:active {
+    transform: translateY(0) !important;
+    box-shadow: var(--shadow-sm) !important;
 }
 
 .el-input__wrapper {
-    border-radius: 12px !important;
-    transition: all 0.3s ease !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--neutral-300) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background: var(--neutral-50) !important;
 }
 
 .el-input__wrapper:hover {
-    border-color: var(--el-color-primary) !important;
+    border-color: var(--primary-blue-light) !important;
+    background: #ffffff !important;
+}
+
+.el-input__wrapper.is-focus {
+    border-color: var(--primary-blue) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+    background: #ffffff !important;
 }
 
 .el-card {
-    border-radius: 16px !important;
-    border: 1px solid var(--glass-border) !important;
-    background: var(--glass-bg) !important;
-    backdrop-filter: blur(10px) !important;
-    box-shadow: var(--shadow-soft) !important;
+    border-radius: 12px !important;
+    border: 1px solid var(--neutral-200) !important;
+    background: #ffffff !important;
+    box-shadow: var(--shadow-sm) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-card:hover {
+    box-shadow: var(--shadow-md) !important;
+    border-color: var(--neutral-300) !important;
 }
 
 /* 响应式设计优化 */
