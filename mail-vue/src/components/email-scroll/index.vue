@@ -18,7 +18,11 @@
       </div>
 
       <div class="header-right">
-        <span class="email-count" v-if="total">共 {{ total }} 封</span>
+        <!-- 🔢 新增：选择数量显示 -->
+        <span class="selected-count" v-if="getSelectedMailsIds().length > 0">
+          已选择 {{ getSelectedMailsIds().length }} 封
+        </span>
+        <span class="email-count" v-if="total && getSelectedMailsIds().length === 0">共 {{ total }} 封</span>
         <Icon v-if="showAccountIcon" class="more-icon icon" width="16" height="16" icon="akar-icons:dot-grid-fill"
               @click="changeAccountShow"/>
       </div>
@@ -31,6 +35,10 @@
           <div v-for="item in emailList" :key="item.emailId">
             <div class="email-row"
                  :data-checked="item.checked"
+                 :class="{
+                   'unread': !item.isRead,
+                   'important': item.isImportant
+                 }"
                  @click="jumpDetails(item)"
             >
               <el-checkbox v-model="item.checked" @click.stop></el-checkbox>
@@ -111,8 +119,12 @@
                 </div>
                 <div>
                   <div class="email-text">
-                    <span class="email-subject">{{ item.subject }}</span>
-                    <span class="email-content">{{ htmlToText(item) }}</span>
+                    <div class="email-subject">{{ item.subject }}</div>
+                    <!-- 🔍 新增：邮件预览功能 -->
+                    <div class="email-preview" v-if="getEmailPreview(item)">
+                      {{ getEmailPreview(item) }}
+                    </div>
+                    <div class="email-content" v-else>{{ htmlToText(item) }}</div>
                   </div>
                   <div class="user-info" v-if="showUserInfo">
                     <div class="user">
@@ -166,6 +178,8 @@ import {useEmailStore} from "@/store/email.js";
 import {useUiStore} from "@/store/ui.js";
 import {useSettingStore} from "@/store/setting.js";
 import {fromNow} from "@/utils/day.js";
+// 🛡️ 新增：Element Plus 组件导入
+import {ElMessage, ElMessageBox} from 'element-plus';
 
 const props = defineProps({
   getEmailList: Function,
@@ -292,11 +306,10 @@ const accountShow = computed(() => {
 function handleScroll(e) {
 }
 
+// 🎨 优化的邮件内容预览函数
 function htmlToText(email) {
   if (email.content) {
-
     const tempDiv = document.createElement('div');
-
     tempDiv.innerHTML = email.content.replace(
         /<(img|iframe|object|embed|video|audio|source|link)[^>]*>/gi, ''
     );
@@ -313,7 +326,23 @@ function htmlToText(email) {
   } else {
     return ''
   }
+}
 
+// 🔍 新增：获取邮件预览文本（前两行）
+function getEmailPreview(email) {
+  const fullText = htmlToText(email);
+  if (!fullText) return '';
+
+  // 按句号、问号、感叹号分割，获取前两句
+  const sentences = fullText.split(/[。！？.!?]+/).filter(s => s.trim().length > 0);
+  const preview = sentences.slice(0, 2).join('。');
+
+  // 如果预览文本太长，截取前120个字符
+  if (preview.length > 120) {
+    return preview.substring(0, 120) + '...';
+  }
+
+  return preview + (sentences.length > 2 ? '...' : '');
 }
 
 function cleanSpace(text) {
@@ -356,21 +385,39 @@ function changeAccountShow() {
 }
 
 
+// 🛡️ 优化：更详细的删除确认机制
 const handleDelete = () => {
-  ElMessageBox.confirm('确认批量删除这些邮件吗?', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning'
-  }).then(() => {
-    const emailIds = getSelectedMailsIds();
-    props.emailDelete(emailIds).then(() => {
+  const selectedIds = getSelectedMailsIds();
+  const count = selectedIds.length;
+
+  ElMessageBox.confirm(
+    `确定要删除选中的 ${count} 封邮件吗？\n\n⚠️ 此操作不可撤销，请谨慎操作。`,
+    '删除确认',
+    {
+      confirmButtonText: `确定删除 ${count} 封`,
+      cancelButtonText: '取消',
+      type: 'warning',
+      confirmButtonClass: 'el-button--danger',
+      customClass: 'delete-confirm-dialog',
+      dangerouslyUseHTMLString: false
+    }
+  ).then(() => {
+    props.emailDelete(selectedIds).then(() => {
       ElMessage({
-        message: '删除成功',
+        message: `成功删除 ${count} 封邮件`,
         type: 'success',
         plain: true
       })
-      emailStore.deleteIds = emailIds;
+      emailStore.deleteIds = selectedIds;
+    }).catch(() => {
+      ElMessage({
+        message: '删除失败，请重试',
+        type: 'error',
+        plain: true
+      })
     })
+  }).catch(() => {
+    // 用户取消删除，不做任何操作
   })
 }
 
@@ -437,8 +484,35 @@ function updateCheckStatus() {
   isIndeterminate.value = checkedCount > 0 && checkedCount < emailList.length;
 }
 
+// 🎨 新增：标记邮件为已读
 function jumpDetails(email) {
+  // 标记邮件为已读
+  if (!email.isRead) {
+    email.isRead = true;
+    saveReadStatus(email.emailId);
+  }
   emit('jump', email)
+}
+
+// 🎨 新增：初始化邮件已读状态（基于本地存储）
+function initEmailReadStatus(emailList) {
+  const readEmails = JSON.parse(localStorage.getItem('readEmails') || '[]');
+  emailList.forEach(email => {
+    email.isRead = readEmails.includes(email.emailId);
+    // 暂时设置所有接收的邮件为未读，发送的邮件为已读
+    if (!email.hasOwnProperty('isRead')) {
+      email.isRead = email.type === 1; // type 1 是发送的邮件
+    }
+  });
+}
+
+// 🎨 新增：保存已读状态到本地存储
+function saveReadStatus(emailId) {
+  const readEmails = JSON.parse(localStorage.getItem('readEmails') || '[]');
+  if (!readEmails.includes(emailId)) {
+    readEmails.push(emailId);
+    localStorage.setItem('readEmails', JSON.stringify(readEmails));
+  }
 }
 
 
@@ -475,6 +549,9 @@ function getEmailList(refresh = false) {
       ...item,
       checked: false
     }));
+
+    // 🎨 初始化邮件已读状态
+    initEmailReadStatus(list);
 
 
     if (refresh) {
@@ -616,6 +693,47 @@ function loadData() {
       0 8px 25px rgba(59, 130, 246, 0.15),
       0 4px 10px rgba(0, 0, 0, 0.1);
     border-color: #e0e7ff;
+  }
+
+  /* 🔥 新增：未读邮件视觉优化 */
+  &.unread {
+    background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+    border-left: 4px solid var(--primary-500);
+    border-color: var(--primary-200);
+
+    .email-subject {
+      font-weight: 700; /* 加粗主题 */
+      color: var(--primary-700);
+    }
+
+    .name {
+      font-weight: 600; /* 加粗发件人 */
+      color: var(--gray-800);
+    }
+
+    &:hover {
+      background: linear-gradient(135deg, #dbeafe 0%, #f1f5f9 100%);
+      border-left-color: var(--primary-600);
+      box-shadow:
+        0 8px 25px rgba(59, 130, 246, 0.2),
+        0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  /* 🔥 新增：重要邮件标识 */
+  &.important {
+    border-left: 4px solid var(--error-500);
+    background: linear-gradient(135deg, var(--error-50) 0%, #ffffff 100%);
+
+    .email-subject {
+      color: var(--error-700);
+    }
+  }
+
+  /* 🔥 未读且重要的邮件 */
+  &.unread.important {
+    border-left: 4px solid var(--error-500);
+    background: linear-gradient(135deg, var(--error-50) 0%, var(--primary-50) 100%);
   }
 
   &[data-checked="true"] {
@@ -767,6 +885,38 @@ function loadData() {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 6px; /* 🎨 为预览留出空间 */
+        font-size: 15px;
+        line-height: 1.4;
+
+        @media (max-width: 768px) {
+          font-size: 14px;
+          margin-bottom: 4px;
+        }
+      }
+
+      /* 🔍 新增：邮件预览样式 */
+      .email-preview {
+        color: #4b5563; /* 比原内容稍深的颜色 */
+        font-size: 13px;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 2px;
+
+        @media (max-width: 768px) {
+          font-size: 12px;
+          -webkit-line-clamp: 1;
+        }
+
+        @media (max-width: 1199px) {
+          padding-left: 0;
+          margin-top: 4px;
+        }
       }
 
       .email-content {
@@ -775,9 +925,16 @@ function loadData() {
         text-overflow: ellipsis;
         padding-left: 10px;
         color: #94a3b8;
+        font-size: 13px;
+        line-height: 1.5;
+
         @media (max-width: 1199px) {
           padding-left: 0;
           margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 12px;
         }
       }
     }
@@ -893,6 +1050,26 @@ function loadData() {
     .email-count {
       white-space: nowrap;
       margin-top: 6px;
+      color: var(--gray-600);
+      font-size: 14px;
+    }
+
+    /* 🔢 新增：选择数量显示样式 */
+    .selected-count {
+      white-space: nowrap;
+      margin-top: 6px;
+      color: var(--primary-600);
+      font-weight: 600;
+      font-size: 14px;
+      background: var(--primary-50);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--primary-200);
+
+      @media (max-width: 768px) {
+        font-size: 12px;
+        padding: 3px 10px;
+      }
     }
   }
 
