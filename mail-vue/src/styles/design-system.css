@@ -1,0 +1,240 @@
+/* 🎨 云邮件项目 - 完整设计系统 */
+/* 现代化邮箱服务的视觉设计系统 v1.0 */
+
+:root {
+  /* ===== 1.1 色彩系统重构 ===== */
+  
+  /* 🎯 主色调层级 (Primary Blue) */
+  --primary-50: #eff6ff;
+  --primary-100: #dbeafe;
+  --primary-200: #bfdbfe;
+  --primary-300: #93c5fd;
+  --primary-400: #60a5fa;
+  --primary-500: #3b82f6;
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
+  --primary-800: #1e40af;
+  --primary-900: #1e3a8a;
+  --primary-950: #172554;
+
+  /* 🌟 功能色彩系统 */
+  --success-50: #ecfdf5;
+  --success-100: #d1fae5;
+  --success-200: #a7f3d0;
+  --success-300: #6ee7b7;
+  --success-400: #34d399;
+  --success-500: #10b981;
+  --success-600: #059669;
+  --success-700: #047857;
+  --success-800: #065f46;
+  --success-900: #064e3b;
+
+  --warning-50: #fffbeb;
+  --warning-100: #fef3c7;
+  --warning-200: #fde68a;
+  --warning-300: #fcd34d;
+  --warning-400: #fbbf24;
+  --warning-500: #f59e0b;
+  --warning-600: #d97706;
+  --warning-700: #b45309;
+  --warning-800: #92400e;
+  --warning-900: #78350f;
+
+  --error-50: #fef2f2;
+  --error-100: #fee2e2;
+  --error-200: #fecaca;
+  --error-300: #fca5a5;
+  --error-400: #f87171;
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+  --error-700: #b91c1c;
+  --error-800: #991b1b;
+  --error-900: #7f1d1d;
+
+  --info-50: #eff6ff;
+  --info-100: #dbeafe;
+  --info-200: #bfdbfe;
+  --info-300: #93c5fd;
+  --info-400: #60a5fa;
+  --info-500: #3b82f6;
+  --info-600: #2563eb;
+  --info-700: #1d4ed8;
+  --info-800: #1e40af;
+  --info-900: #1e3a8a;
+
+  /* 🎨 中性色系 (Gray Scale) */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --gray-950: #030712;
+
+  /* 📧 邮件状态专用色彩 */
+  --mail-unread-bg: var(--primary-50);
+  --mail-unread-border: var(--primary-500);
+  --mail-unread-text: var(--primary-700);
+  
+  --mail-read-bg: var(--gray-50);
+  --mail-read-border: var(--gray-300);
+  --mail-read-text: var(--gray-600);
+  
+  --mail-important-bg: var(--error-50);
+  --mail-important-border: var(--error-500);
+  --mail-important-text: var(--error-700);
+  
+  --mail-starred-bg: var(--warning-50);
+  --mail-starred-border: var(--warning-500);
+  --mail-starred-text: var(--warning-700);
+  
+  --mail-draft-bg: #f3f4f6;
+  --mail-draft-border: #8b5cf6;
+  --mail-draft-text: #6d28d9;
+  
+  --mail-sent-bg: var(--success-50);
+  --mail-sent-border: var(--success-500);
+  --mail-sent-text: var(--success-700);
+
+  /* 🎯 语义化色彩别名 */
+  --color-primary: var(--primary-600);
+  --color-primary-hover: var(--primary-700);
+  --color-primary-active: var(--primary-800);
+  --color-primary-light: var(--primary-100);
+  --color-primary-lighter: var(--primary-50);
+
+  --color-success: var(--success-600);
+  --color-warning: var(--warning-600);
+  --color-error: var(--error-600);
+  --color-info: var(--info-600);
+
+  --color-text-primary: var(--gray-900);
+  --color-text-secondary: var(--gray-700);
+  --color-text-tertiary: var(--gray-500);
+  --color-text-disabled: var(--gray-400);
+
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: var(--gray-50);
+  --color-bg-tertiary: var(--gray-100);
+
+  --color-border-primary: var(--gray-200);
+  --color-border-secondary: var(--gray-300);
+  --color-border-focus: var(--primary-500);
+
+  /* 🌈 渐变色系统 */
+  --gradient-primary: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-700) 100%);
+  --gradient-primary-light: linear-gradient(135deg, var(--primary-100) 0%, var(--primary-200) 100%);
+  --gradient-success: linear-gradient(135deg, var(--success-500) 0%, var(--success-700) 100%);
+  --gradient-warning: linear-gradient(135deg, var(--warning-500) 0%, var(--warning-700) 100%);
+  --gradient-error: linear-gradient(135deg, var(--error-500) 0%, var(--error-700) 100%);
+  --gradient-subtle: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+
+  /* 🪟 玻璃态效果 */
+  --glass-bg-primary: rgba(255, 255, 255, 0.85);
+  --glass-bg-secondary: rgba(255, 255, 255, 0.95);
+  --glass-bg-dark: rgba(0, 0, 0, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-border-strong: rgba(255, 255, 255, 0.3);
+  --glass-backdrop-filter: blur(10px) saturate(180%);
+  --glass-backdrop-filter-strong: blur(20px) saturate(200%);
+
+  /* ===== 1.2 间距系统标准化 ===== */
+  
+  /* 📏 统一间距规范 */
+  --space-0: 0;
+  --space-px: 1px;
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-3-5: 14px;
+  --space-4: 16px;
+  --space-4-5: 18px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-11: 44px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* 🔘 圆角系统 */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-base: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 24px;
+  --radius-full: 9999px;
+
+  /* 📐 组件间距标准 */
+  --spacing-component-xs: var(--space-1);
+  --spacing-component-sm: var(--space-2);
+  --spacing-component-md: var(--space-4);
+  --spacing-component-lg: var(--space-6);
+  --spacing-component-xl: var(--space-8);
+
+  --spacing-section-xs: var(--space-4);
+  --spacing-section-sm: var(--space-6);
+  --spacing-section-md: var(--space-8);
+  --spacing-section-lg: var(--space-12);
+  --spacing-section-xl: var(--space-16);
+
+  /* ===== 1.3 阴影系统升级 ===== */
+  
+  /* 🌊 分层阴影系统 */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+
+  /* 🎨 特殊阴影效果 */
+  --shadow-primary: 0 4px 14px 0 rgba(37, 99, 235, 0.25);
+  --shadow-primary-lg: 0 10px 25px -3px rgba(37, 99, 235, 0.3);
+  --shadow-success: 0 4px 14px 0 rgba(16, 185, 129, 0.25);
+  --shadow-warning: 0 4px 14px 0 rgba(245, 158, 11, 0.25);
+  --shadow-error: 0 4px 14px 0 rgba(239, 68, 68, 0.25);
+
+  /* 🪟 毛玻璃阴影 */
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-glass-lg: 0 16px 64px rgba(0, 0, 0, 0.16);
+
+  /* 📱 移动端优化阴影 */
+  --shadow-mobile-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-mobile-md: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-mobile-lg: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* 🌙 深色主题支持 (预留) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* 深色主题变量将在后续版本中实现 */
+  }
+}
+
+/* 📱 移动端优化 */
+@media (max-width: 768px) {
+  :root {
+    /* 移动端间距调整 */
+    --spacing-component-md: var(--space-3);
+    --spacing-component-lg: var(--space-4);
+    --spacing-section-md: var(--space-6);
+    --spacing-section-lg: var(--space-8);
+  }
+}

@@ -1,5 +1,6 @@
 
-/* 🎨 现代邮箱服务主题导入 */
+/* 🎨 现代邮箱服务设计系统导入 */
+@import url('./styles/design-system.css');
 @import url('./styles/modern-mail-theme.css');
 
 * {
@@ -102,71 +103,66 @@ button, input, select, textarea {
 }
 
 :root {
-    /* 🎨 全新邮箱服务配色方案 - 清新专业风格 */
-    --el-color-primary: #2563eb;
-    --el-color-primary-dark-2: #1d4ed8;
-    --el-color-primary-light-3: #60a5fa;
-    --el-color-primary-light-5: #93c5fd;
-    --el-color-primary-light-7: #bfdbfe;
-    --el-color-primary-light-9: #dbeafe;
-    --el-text-color-regular: #1f2937;
+    /* 🎨 Element Plus 主题色彩映射到设计系统 */
+    --el-color-primary: var(--primary-600);
+    --el-color-primary-dark-2: var(--primary-700);
+    --el-color-primary-light-3: var(--primary-400);
+    --el-color-primary-light-5: var(--primary-300);
+    --el-color-primary-light-7: var(--primary-200);
+    --el-color-primary-light-9: var(--primary-100);
+    --el-text-color-regular: var(--color-text-primary);
 
-    /* 🌟 现代邮箱服务主题色彩 */
-    --primary-blue: #2563eb;
-    --primary-blue-light: #3b82f6;
-    --primary-blue-dark: #1d4ed8;
-    --accent-green: #10b981;
-    --accent-orange: #f59e0b;
-    --accent-red: #ef4444;
-    --neutral-50: #f9fafb;
-    --neutral-100: #f3f4f6;
-    --neutral-200: #e5e7eb;
-    --neutral-300: #d1d5db;
-    --neutral-400: #9ca3af;
-    --neutral-500: #6b7280;
-    --neutral-600: #4b5563;
-    --neutral-700: #374151;
-    --neutral-800: #1f2937;
-    --neutral-900: #111827;
+    /* 🌟 兼容性别名 (保持向后兼容) */
+    --primary-blue: var(--primary-600);
+    --primary-blue-light: var(--primary-500);
+    --primary-blue-dark: var(--primary-700);
+    --accent-green: var(--success-600);
+    --accent-orange: var(--warning-600);
+    --accent-red: var(--error-600);
+    --neutral-50: var(--gray-50);
+    --neutral-100: var(--gray-100);
+    --neutral-200: var(--gray-200);
+    --neutral-300: var(--gray-300);
+    --neutral-400: var(--gray-400);
+    --neutral-500: var(--gray-500);
+    --neutral-600: var(--gray-600);
+    --neutral-700: var(--gray-700);
+    --neutral-800: var(--gray-800);
+    --neutral-900: var(--gray-900);
 
-    /* 🎯 专业渐变效果 */
-    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-    --gradient-secondary: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-    --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-    --gradient-subtle: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    /* 🎯 渐变效果映射到设计系统 */
+    --gradient-primary-legacy: var(--gradient-primary);
+    --gradient-secondary: var(--gradient-success);
+    --gradient-warm: var(--gradient-warning);
+    --gradient-cool: linear-gradient(135deg, var(--info-500) 0%, var(--info-700) 100%);
+    --gradient-subtle-legacy: var(--gradient-subtle);
 
-    /* 🪟 现代玻璃态效果 */
-    --glass-bg: rgba(255, 255, 255, 0.85);
-    --glass-bg-dark: rgba(255, 255, 255, 0.95);
-    --glass-border: rgba(37, 99, 235, 0.1);
-    --glass-border-light: rgba(255, 255, 255, 0.2);
+    /* 🪟 玻璃态效果 - 兼容性别名 */
+    --glass-bg: var(--glass-bg-primary);
+    --glass-bg-dark: var(--glass-bg-secondary);
+    --glass-border-legacy: var(--glass-border);
+    --glass-border-light: var(--glass-border-strong);
 
-    /* 🌊 精致阴影系统 */
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
-    --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+    /* 🌊 阴影系统 - 使用设计系统中的阴影 */
+    /* 这些变量已在 design-system.css 中定义，无需重复映射 */
 
-    /* 📧 邮箱专用色彩 */
-    --mail-unread: #2563eb;
-    --mail-read: #6b7280;
-    --mail-important: #ef4444;
-    --mail-starred: #f59e0b;
-    --mail-draft: #8b5cf6;
-    --mail-sent: #10b981;
+    /* 📧 邮箱专用色彩映射到设计系统 */
+    --mail-unread: var(--mail-unread-border);
+    --mail-read: var(--mail-read-text);
+    --mail-important: var(--mail-important-border);
+    --mail-starred: var(--mail-starred-border);
+    --mail-draft: var(--mail-draft-border);
+    --mail-sent: var(--mail-sent-border);
 
-    /* 🎨 状态色彩 */
-    --success-bg: #ecfdf5;
-    --success-border: #10b981;
-    --warning-bg: #fffbeb;
-    --warning-border: #f59e0b;
-    --error-bg: #fef2f2;
-    --error-border: #ef4444;
-    --info-bg: #eff6ff;
-    --info-border: #2563eb;
+    /* 🎨 状态色彩映射到设计系统 */
+    --success-bg: var(--success-50);
+    --success-border: var(--success-600);
+    --warning-bg: var(--warning-50);
+    --warning-border: var(--warning-600);
+    --error-bg: var(--error-50);
+    --error-border: var(--error-600);
+    --info-bg: var(--info-50);
+    --info-border: var(--info-600);
 }
 
 .message-bottom {
