@@ -42,7 +42,7 @@ receive = 0                              # 邮件接收 (0=开启)
 send = 0                                 # 邮件发送 (0=开启)
 add_email = 1                            # 添加邮箱 (0=开启)
 many_email = 1                          # 多号模式 (0=开启，允许一用户多邮箱)
-auto_refresh_time = 30                   # 轮询刷新时间(秒)
+auto_refresh_time = 29                   # 轮询刷新时间(秒)
 
 # 验证设置
 register_verify = 1                      # 注册人机验证 (0=开启)
