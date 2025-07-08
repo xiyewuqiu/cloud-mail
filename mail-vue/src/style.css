@@ -1,4 +1,8 @@
 
+/* 🎨 现代邮箱服务设计系统导入 */
+@import url('./styles/design-system.css');
+@import url('./styles/modern-mail-theme.css');
+
 * {
     margin: 0;
     padding: 0;
@@ -16,6 +20,15 @@ html, body {
 }
 
 @font-face {
+    font-family: 'LXGWWenKai';
+    src: url('@/assets/fonts/LXGWWenKai-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* 🎨 保留HarmonyOS作为备用字体 */
+@font-face {
     font-family: 'HarmonyOS';
     src: url('@/assets/fonts/HarmonyOS_Sans_SC_Regular.woff2') format('woff2');
     font-weight: normal;
@@ -29,10 +42,10 @@ html, body {
 }
 
 body {
-    font-family: 'HarmonyOS', -apple-system, BlinkMacSystemFont,
+    font-family: 'LXGWWenKai', 'HarmonyOS', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     'Noto Sans', sans-serif;
-    line-height: 1.5;
+    line-height: 1.6; /* 🎨 霞鹜文楷适合稍大的行高 */
     color: #333;
     background-color: #fff;
     font-size: 14px;
@@ -90,86 +103,178 @@ button, input, select, textarea {
 }
 
 :root {
-    --el-color-primary: #667eea;
-    --el-color-primary-dark-2: #5a67d8;
-    --el-color-primary-light-3: #8b9cf7;
-    --el-color-primary-light-5: #a5b4fc;
-    --el-color-primary-light-7: #c7d2fe;
-    --el-color-primary-light-9: #e0e7ff;
-    --el-text-color-regular: #374151;
+    /* 🎨 Element Plus 主题色彩映射到设计系统 */
+    --el-color-primary: var(--primary-600);
+    --el-color-primary-dark-2: var(--primary-700);
+    --el-color-primary-light-3: var(--primary-400);
+    --el-color-primary-light-5: var(--primary-300);
+    --el-color-primary-light-7: var(--primary-200);
+    --el-color-primary-light-9: var(--primary-100);
+    --el-text-color-regular: var(--color-text-primary);
 
-    /* 新增现代化颜色变量 */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --glass-bg: rgba(255, 255, 255, 0.95);
-    --glass-border: rgba(255, 255, 255, 0.3);
-    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.1);
-    --shadow-medium: 0 12px 40px rgba(0, 0, 0, 0.15);
-    --shadow-strong: 0 25px 50px rgba(0, 0, 0, 0.25);
+    /* 🌟 兼容性别名 (保持向后兼容) */
+    --primary-blue: var(--primary-600);
+    --primary-blue-light: var(--primary-500);
+    --primary-blue-dark: var(--primary-700);
+    --accent-green: var(--success-600);
+    --accent-orange: var(--warning-600);
+    --accent-red: var(--error-600);
+    --neutral-50: var(--gray-50);
+    --neutral-100: var(--gray-100);
+    --neutral-200: var(--gray-200);
+    --neutral-300: var(--gray-300);
+    --neutral-400: var(--gray-400);
+    --neutral-500: var(--gray-500);
+    --neutral-600: var(--gray-600);
+    --neutral-700: var(--gray-700);
+    --neutral-800: var(--gray-800);
+    --neutral-900: var(--gray-900);
+
+    /* 🎯 渐变效果映射到设计系统 */
+    --gradient-primary-legacy: var(--gradient-primary);
+    --gradient-secondary: var(--gradient-success);
+    --gradient-warm: var(--gradient-warning);
+    --gradient-cool: linear-gradient(135deg, var(--info-500) 0%, var(--info-700) 100%);
+    --gradient-subtle-legacy: var(--gradient-subtle);
+
+    /* 🪟 玻璃态效果 - 兼容性别名 */
+    --glass-bg: var(--glass-bg-primary);
+    --glass-bg-dark: var(--glass-bg-secondary);
+    --glass-border-legacy: var(--glass-border);
+    --glass-border-light: var(--glass-border-strong);
+
+    /* 🌊 阴影系统 - 使用设计系统中的阴影 */
+    /* 这些变量已在 design-system.css 中定义，无需重复映射 */
+
+    /* 📧 邮箱专用色彩映射到设计系统 */
+    --mail-unread: var(--mail-unread-border);
+    --mail-read: var(--mail-read-text);
+    --mail-important: var(--mail-important-border);
+    --mail-starred: var(--mail-starred-border);
+    --mail-draft: var(--mail-draft-border);
+    --mail-sent: var(--mail-sent-border);
+
+    /* 🎨 状态色彩映射到设计系统 */
+    --success-bg: var(--success-50);
+    --success-border: var(--success-600);
+    --warning-bg: var(--warning-50);
+    --warning-border: var(--warning-600);
+    --error-bg: var(--error-50);
+    --error-border: var(--error-600);
+    --info-bg: var(--info-50);
+    --info-border: var(--info-600);
 }
 
 .message-bottom {
     top: auto !important;
     bottom: 20px !important;
+    /* 🐛 修复：只隐藏消息底部的图标，不影响其他图标 */
     .el-icon {
         display: none !important;
     }
 }
 
+/* 🐛 修复：确保邮件操作图标正常显示 */
+.header-actions .icon,
+.header-left .icon {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
 @media (pointer: fine) and (hover: hover) {
-    /* 整个滚动条 */
+    /* 🎨 现代化滚动条设计 */
     ::-webkit-scrollbar {
-        width: 8px; /* 垂直滚动条宽度 */
-        height: 8px; /* 水平滚动条高度 */
+        width: 6px; /* 更细的滚动条 */
+        height: 6px;
     }
 
     /* 滚动条轨道 */
     ::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
+        background: var(--neutral-100);
+        border-radius: 8px;
     }
 
     /* 滚动条滑块 */
     ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-radius: 10px;
+        background: var(--gradient-primary);
+        border-radius: 8px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #5a67d8, #6b46c1);
+        background: var(--primary-blue-dark);
+        transform: scaleY(1.1);
     }
 }
 
-/* 全局美化样式 */
+/* 🎨 融洽设计 - 现代邮箱服务组件样式 */
 .el-button--primary {
-    background: var(--gradient-primary) !important;
-    border: none !important;
-    border-radius: 12px !important;
-    transition: all 0.3s ease !important;
+    background: linear-gradient(135deg,
+        rgba(37, 99, 235, 0.9) 0%,
+        rgba(29, 78, 216, 0.95) 100%
+    ) !important;
+    backdrop-filter: blur(10px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.025em !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow:
+        0 2px 8px rgba(37, 99, 235, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
 .el-button--primary:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: var(--shadow-lg) !important;
+    background: var(--primary-blue-dark) !important;
+}
+
+.el-button--primary:active {
+    transform: translateY(0) !important;
+    box-shadow: var(--shadow-sm) !important;
 }
 
 .el-input__wrapper {
-    border-radius: 12px !important;
-    transition: all 0.3s ease !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--neutral-300) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background: var(--neutral-50) !important;
 }
 
 .el-input__wrapper:hover {
-    border-color: var(--el-color-primary) !important;
+    border-color: var(--primary-blue-light) !important;
+    background: #ffffff !important;
+}
+
+.el-input__wrapper.is-focus {
+    border-color: var(--primary-blue) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+    background: #ffffff !important;
 }
 
 .el-card {
-    border-radius: 16px !important;
-    border: 1px solid var(--glass-border) !important;
-    background: var(--glass-bg) !important;
-    backdrop-filter: blur(10px) !important;
-    box-shadow: var(--shadow-soft) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(226, 232, 240, 0.6) !important;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(248, 250, 252, 0.8) 100%
+    ) !important;
+    backdrop-filter: blur(10px) saturate(180%) !important;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.el-card:hover {
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border-color: rgba(37, 99, 235, 0.3) !important;
+    transform: translateY(-1px) !important;
 }
 
 /* 响应式设计优化 */
@@ -213,6 +318,51 @@ button, input, select, textarea {
     }
 }
 
+/* 📱 移动端专用优化 */
+@media (max-width: 768px) {
+    /* 触摸优化 */
+    .el-button, .el-input, .el-card, [role="button"] {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        min-height: 44px; /* iOS推荐的最小触摸目标 */
+    }
+
+    /* 文字选择优化 */
+    .mail-list-item, .el-menu-item {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    /* 滚动优化 */
+    .el-scrollbar__wrap {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 更紧凑的布局 */
+    .el-button--primary {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        min-height: 40px !important;
+    }
+
+    .el-input__wrapper {
+        min-height: 40px !important;
+    }
+
+    /* 优化卡片间距 */
+    .el-card {
+        margin: 4px 0 !important;
+    }
+
+    /* 优化菜单项高度 */
+    .el-menu-item {
+        min-height: 44px !important;
+        line-height: 44px !important;
+    }
+}
+
 /* 超小屏幕优化 */
 @media (max-width: 360px) {
     body {
@@ -222,9 +372,21 @@ button, input, select, textarea {
     .el-button--primary {
         padding: 6px 10px !important;
         font-size: 12px !important;
+        min-height: 36px !important;
+    }
+
+    .el-input__wrapper {
+        min-height: 36px !important;
     }
 
     .el-input__inner {
+        font-size: 13px !important;
+    }
+
+    /* 极小屏幕的特殊处理 */
+    .el-menu-item {
+        min-height: 40px !important;
+        line-height: 40px !important;
         font-size: 13px !important;
     }
 }

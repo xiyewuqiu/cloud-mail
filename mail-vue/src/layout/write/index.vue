@@ -4,14 +4,12 @@
       <div class="title">
         <div class="title-left">
           <span class="title-text">
-            <Icon icon="hugeicons:quill-write-01" width="28" height="28" />
+            <Icon icon="hugeicons:quill-write-01" width="24" height="24" />
           </span>
-          <span class="sender">发件人:</span>
-          <span class="sender-name">{{form.name}}</span>
-          <span class="send-email"><{{form.sendEmail}}></span>
+          <span class="title-label">撰写邮件</span>
         </div>
-        <div @click="close" style="cursor: pointer;">
-          <Icon icon="material-symbols-light:close-rounded" width="22" height="22"/>
+        <div @click="close" class="close-button">
+          <Icon icon="material-symbols-light:close-rounded" width="20" height="20"/>
         </div>
       </div>
       <div class="container">
@@ -59,6 +57,7 @@ import tinyEditor from '@/components/tiny-editor/index.vue'
 import {h, onMounted, onUnmounted, reactive, ref} from "vue";
 import {Icon} from "@iconify/vue";
 import {useUserStore} from "@/store/user.js";
+import {useUiStore} from "@/store/ui.js";
 import {emailSend} from "@/request/email.js";
 import {isEmail} from "@/utils/verify-utils.js";
 import {useAccountStore} from "@/store/account.js";
@@ -75,6 +74,7 @@ defineExpose({
 
 const emailStore = useEmailStore();
 const accountStore = useAccountStore()
+const uiStore = useUiStore();
 const editor = ref({})
 const userStore = useUserStore();
 const show = ref(false);
@@ -301,6 +301,8 @@ function open() {
     form.name = accountStore.currentAccount.name;
   }
   show.value = true;
+  // 💌 通知UI Store邮件撰写界面已打开
+  uiStore.openWriter();
   editor.value.focus()
 }
 
@@ -320,6 +322,8 @@ onUnmounted(() => {
 
 function close() {
   show.value = false;
+  // 💌 通知UI Store邮件撰写界面已关闭
+  uiStore.closeWriter();
 }
 
 </script>
@@ -339,44 +343,68 @@ function close() {
   z-index: 1000;
 
   .write-box {
-    background: rgba(255, 255, 255, 0.95);
+    /* 🎨 现代简洁背景 */
+    background: #ffffff;
     backdrop-filter: blur(20px);
     width: min(1200px,calc(100% - 80px));
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
-    padding: 24px;
-    border-radius: 20px;
+    /* 🌟 更柔和的阴影 */
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 32px;
+    border-radius: 24px;
     display: grid;
     grid-template-rows: auto 1fr;
     overflow: hidden;
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 35px 70px rgba(0, 0, 0, 0.3);
+      transform: translateY(-4px);
+      box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.15),
+        0 20px 20px -5px rgba(0, 0, 0, 0.08);
     }
+    /* 📱 平板优化 */
     @media (max-width: 1024px) {
-      width: calc(100% - 20px);
-      height: calc(100% - 20px);
+      width: calc(100% - 32px);
+      height: calc(100% - 32px);
+      border-radius: 20px;
+      padding: 24px;
+      margin: 16px;
+    }
+
+    /* 📱 移动端优化 */
+    @media (max-width: 768px) {
+      width: calc(100% - 24px);
+      height: calc(100% - 24px);
       border-radius: 16px;
       padding: 20px;
-      margin: 10px;
+      margin: 12px;
+
+      /* 移动端减少悬浮效果 */
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow:
+          0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
     }
 
-    @media (max-width: 768px) {
-      width: calc(100% - 16px);
-      height: calc(100% - 16px);
-      border-radius: 12px;
-      padding: 16px;
-      margin: 8px;
-    }
-
+    /* 📱 小屏幕全屏优化 */
     @media (max-width: 480px) {
       width: 100%;
       height: 100%;
       border-radius: 0;
-      padding: 12px;
+      padding: 16px;
       margin: 0;
+      border: none;
+
+      /* 小屏幕禁用悬浮效果 */
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
     }
 
     @media (min-width: 1025px) {
@@ -386,85 +414,88 @@ function close() {
     .title {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 20px;
+      align-items: center;
+      margin-bottom: 24px;
       padding: 16px 20px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 12px;
-      color: white;
+      /* 🎨 更简洁的头部设计 */
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      color: #1e293b;
 
       .title-left {
         align-items: center;
-        display: grid;
-        grid-template-columns: auto auto auto 1fr;
+        display: flex;
         gap: 12px;
+        flex: 1;
       }
 
       .title-text {
         display: flex;
         align-items: center;
+        /* 🎨 现代蓝色图标 */
+        color: #3b82f6;
       }
 
-      .sender {
-        font-weight: 500;
-        opacity: 0.9;
+      .title-label {
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 16px;
+        /* 🎨 简洁标题样式 */
       }
 
-      .sender-name {
-        font-weight: 700;
-        background: rgba(255, 255, 255, 0.2);
-        padding: 4px 8px;
-        border-radius: 6px;
-      }
-
-      .send-email {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 13px;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-
-      div {
+      /* 🎨 现代关闭按钮 */
+      .close-button {
         display: flex;
         align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        color: #64748b;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: #f1f5f9;
+          border-color: #cbd5e1;
+          color: #475569;
+          transform: scale(1.05);
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
       }
 
+      /* 📱 移动端优化 */
       @media (max-width: 768px) {
         padding: 12px 16px;
-        margin-bottom: 16px;
-        border-radius: 10px;
+        margin-bottom: 20px;
 
-        .title-left {
-          gap: 8px;
-          grid-template-columns: auto auto 1fr;
+        .title-label {
+          font-size: 15px;
         }
 
-        .sender {
-          display: none;
-        }
-
-        .send-email {
-          font-size: 12px;
+        .close-button {
+          width: 28px;
+          height: 28px;
         }
       }
 
+      /* 📱 小屏幕优化 */
       @media (max-width: 480px) {
         padding: 10px 12px;
-        margin-bottom: 12px;
-        border-radius: 8px;
+        margin-bottom: 16px;
 
-        .title-left {
-          gap: 6px;
-          grid-template-columns: auto 1fr;
+        .title-label {
+          font-size: 14px;
         }
 
-        .sender-name {
-          padding: 2px 6px;
-          font-size: 12px;
-        }
-
-        .send-email {
-          font-size: 11px;
+        .close-button {
+          width: 24px;
+          height: 24px;
         }
       }
     }
@@ -473,7 +504,16 @@ function close() {
       height: 100%;
       display: grid;
       grid-template-rows: auto auto 1fr auto;
-      gap: 15px;
+      gap: 20px;
+
+      /* 📱 移动端间距优化 */
+      @media (max-width: 768px) {
+        gap: 16px;
+      }
+
+      @media (max-width: 480px) {
+        gap: 12px;
+      }
       .distribute {
         color: var(--el-color-info);
         background: var(--el-color-info-light-9);

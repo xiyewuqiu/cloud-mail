@@ -23,6 +23,11 @@ function loadFontInShadow() {
   const style = document.createElement('style')
   style.textContent = `
     @font-face {
+      font-family: 'LXGWWenKai';
+      src: url('@/assets/fonts/LXGWWenKai-Regular.woff') format('woff');
+      font-display: swap;
+    }
+    @font-face {
       font-family: 'HarmonyOS';
       src: url('@/assets/fonts/HarmonyOS_Sans_SC_Regular.woff2') format('woff2');
       font-display: swap;
@@ -49,7 +54,7 @@ function updateContent() {
         all: initial;
         width: 100%;
         height: 100%;
-        font-family: 'HarmonyOS', -apple-system, BlinkMacSystemFont,
+        font-family: 'LXGWWenKai', 'HarmonyOS', -apple-system, BlinkMacSystemFont,
                     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         font-size: 14px;
         color: #13181D;
@@ -117,7 +122,7 @@ watch(() => props.html, () => {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: 'HarmonyOS', -apple-system, BlinkMacSystemFont,
+  font-family: 'LXGWWenKai', 'HarmonyOS', -apple-system, BlinkMacSystemFont,
   'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 

@@ -392,10 +392,40 @@ path[fill="#ffdda1"] {
       margin-left: 15px;
     }
   }
+  /* 🎨 滚动条美化 */
   .scrollbar {
     width: 100%;
     height: calc(100% - 38px);
     overflow: auto;
+
+    /* 🌟 自定义滚动条样式 */
+    :deep(.el-scrollbar__bar.is-vertical .el-scrollbar__thumb) {
+      background: linear-gradient(135deg,
+        rgba(99, 102, 241, 0.3) 0%,
+        rgba(139, 92, 246, 0.3) 100%
+      );
+      border-radius: 4px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    :deep(.el-scrollbar__bar.is-vertical .el-scrollbar__thumb:hover) {
+      background: linear-gradient(135deg,
+        rgba(99, 102, 241, 0.5) 0%,
+        rgba(139, 92, 246, 0.5) 100%
+      );
+      transform: scaleX(1.2);
+    }
+
+    :deep(.el-scrollbar__bar.is-vertical) {
+      width: 6px;
+      right: 2px;
+    }
+
+    :deep(.el-scrollbar__track.is-vertical) {
+      background: rgba(99, 102, 241, 0.05);
+      border-radius: 4px;
+    }
+
     @media (max-width: 767px) {
       height: calc(100% - 98px);
     }
@@ -418,36 +448,97 @@ path[fill="#ffdda1"] {
     margin-top: 15px;
   }
 
+  /* 🎨 账户卡片现代化设计 */
   .item {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 12px 10px;
-    margin-bottom: 10px;
+    background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(248, 250, 252, 0.95) 100%
+    );
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 12px;
+    padding: 16px 14px;
+    margin-bottom: 12px;
     margin-left: 10px;
     margin-right: 10px;
     cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+
+    /* 🌟 微妙的背景纹理 */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.02) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.02) 0%, transparent 50%);
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    /* 🎭 悬停效果 */
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 20px 25px rgba(0, 0, 0, 0.08),
+        0 10px 10px rgba(0, 0, 0, 0.04),
+        0 0 0 1px rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.2);
+    }
+
     .account {
       font-weight: 600;
       margin-bottom: 20px;
-      color: #333;
+      color: #1e293b;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      font-size: 14px;
+      letter-spacing: -0.01em;
     }
 
     .opt {
       display: flex;
       justify-content: space-between;
       font-size: 12px;
-      color: #888;
+      color: #64748b;
+
       .settings {
         display: flex;
         align-items: center;
         gap: 10px;
+
+        /* 🎨 图标悬停效果 */
+        > * {
+          transition: all 0.2s ease;
+          border-radius: 6px;
+          padding: 4px;
+
+          &:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+            transform: scale(1.1);
+          }
+        }
       }
+
       .send-email {
         display: flex;
         align-items: center;
+        transition: all 0.2s ease;
+        border-radius: 6px;
+        padding: 4px;
+
+        &:hover {
+          background: rgba(251, 189, 8, 0.1);
+          color: #f59e0b;
+          transform: scale(1.1);
+        }
       }
     }
 
@@ -459,8 +550,27 @@ path[fill="#ffdda1"] {
     margin-top: 10px  ;
   }
 
+  /* 🎨 选中状态优化 */
   .item-choose {
-    background: var(--el-color-primary-light-8);
+    background: linear-gradient(135deg,
+      rgba(99, 102, 241, 0.1) 0%,
+      rgba(139, 92, 246, 0.08) 100%
+    );
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow:
+      0 10px 25px rgba(99, 102, 241, 0.15),
+      0 4px 10px rgba(99, 102, 241, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transform: translateY(-1px);
+
+    .account {
+      color: #6366f1;
+      font-weight: 700;
+    }
+
+    .opt {
+      color: #6366f1;
+    }
   }
 }
 
