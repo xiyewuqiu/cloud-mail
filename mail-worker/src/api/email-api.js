@@ -29,3 +29,8 @@ app.post('/email/send', async (c) => {
 	return c.json(result.ok(email));
 });
 
+app.get('/email/search', async (c) => {
+	const data = await emailService.search(c, c.req.query(), userContext.getUserId(c));
+	return c.json(result.ok(data));
+});
+

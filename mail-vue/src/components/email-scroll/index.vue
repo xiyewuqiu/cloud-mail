@@ -180,6 +180,8 @@ import {useSettingStore} from "@/store/setting.js";
 import {fromNow} from "@/utils/day.js";
 // 🛡️ 新增：Element Plus 组件导入
 import {ElMessage, ElMessageBox} from 'element-plus';
+// 🔍 新增：搜索高亮工具函数导入
+import { extractKeywordContext } from "@/utils/highlight.js";
 
 const props = defineProps({
   getEmailList: Function,
@@ -332,6 +334,14 @@ function htmlToText(email) {
 function getEmailPreview(email) {
   const fullText = htmlToText(email);
   if (!fullText) return '';
+
+  // 🔍 如果是搜索结果，优先显示包含关键词的片段
+  if (email.searchKeyword) {
+    const keywordContext = extractKeywordContext(fullText, email.searchKeyword, 60);
+    if (keywordContext !== fullText) {
+      return keywordContext;
+    }
+  }
 
   // 按句号、问号、感叹号分割，获取前两句
   const sentences = fullText.split(/[。！？.!?]+/).filter(s => s.trim().length > 0);
@@ -1109,6 +1119,17 @@ ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+/* 🔍 搜索关键词高亮样式 */
+:deep(.search-highlight) {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: 600;
+  border: 1px solid #f59e0b;
+  box-shadow: 0 1px 2px rgba(245, 158, 11, 0.2);
 }
 
 </style>

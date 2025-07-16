@@ -20,3 +20,10 @@ export function emailSend(form,progress) {
         noMsg: true
     })
 }
+
+export function emailSearch(keyword, accountId, type, emailId, size) {
+    return http.get('/email/search', {
+        params: { keyword, accountId, type, emailId, size },
+        noMsg: true
+    })
+}

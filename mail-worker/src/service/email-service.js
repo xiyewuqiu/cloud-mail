@@ -365,7 +365,7 @@ const emailService = {
 
 		if (!daySendTotal) {
 			await c.env.kv.put(kvConst.SEND_DAY_COUNT + dateStr, JSON.stringify(receiveEmail.length), { expirationTtl: 60 * 60 * 24 });
-		} else  {
+		} else {
 			daySendTotal = Number(daySendTotal) + receiveEmail.length
 			await c.env.kv.put(kvConst.SEND_DAY_COUNT + dateStr, JSON.stringify(daySendTotal), { expirationTtl: 60 * 60 * 24 });
 		}
@@ -579,6 +579,103 @@ const emailService = {
 			isDel: isDel.NORMAL,
 			status: status
 		}).where(eq(email.emailId, emailId)).returning().get();
+	},
+
+	async search(c, params, userId) {
+		let { keyword, accountId, type, emailId, size } = params;
+
+		size = Number(size) || 20;
+		emailId = Number(emailId) || 0;
+
+		if (size > 50) {
+			size = 50;
+		}
+
+		if (!keyword || keyword.trim() === '') {
+			return { list: [], total: 0 };
+		}
+
+		keyword = keyword.trim();
+
+		const conditions = [
+			eq(email.userId, userId),
+			eq(email.isDel, isDel.NORMAL)
+		];
+
+		// 如果指定了账户ID，添加账户过滤
+		if (accountId) {
+			conditions.push(eq(email.accountId, accountId));
+		}
+
+		// 如果指定了邮件类型，添加类型过滤
+		if (type !== undefined && type !== '') {
+			conditions.push(eq(email.type, Number(type)));
+		}
+
+		// 分页条件
+		if (emailId > 0) {
+			conditions.push(lt(email.emailId, emailId));
+		}
+
+		// 搜索条件：在主题、内容、发件人姓名、发件人邮箱、收件人邮箱中搜索
+		const searchConditions = or(
+			sql`${email.subject} COLLATE NOCASE LIKE ${`%${keyword}%`}`,
+			sql`${email.content} COLLATE NOCASE LIKE ${`%${keyword}%`}`,
+			sql`${email.text} COLLATE NOCASE LIKE ${`%${keyword}%`}`,
+			sql`${email.name} COLLATE NOCASE LIKE ${`%${keyword}%`}`,
+			sql`${email.sendEmail} COLLATE NOCASE LIKE ${`%${keyword}%`}`,
+			sql`${email.toEmail} COLLATE NOCASE LIKE ${`%${keyword}%`}`
+		);
+
+		conditions.push(searchConditions);
+
+		const query = orm(c)
+			.select({
+				...email,
+				starId: star.starId
+			})
+			.from(email)
+			.leftJoin(
+				star,
+				and(
+					eq(star.emailId, email.emailId),
+					eq(star.userId, userId)
+				)
+			)
+			.where(and(...conditions))
+			.orderBy(desc(email.emailId))
+			.limit(size);
+
+		const countQuery = orm(c)
+			.select({ total: count() })
+			.from(email)
+			.where(and(...conditions));
+
+		const [list, totalRow] = await Promise.all([
+			query.all(),
+			countQuery.get()
+		]);
+
+		// 处理星标状态
+		const processedList = list.map(item => ({
+			...item,
+			isStar: item.starId != null ? 1 : 0
+		}));
+
+		// 获取附件信息
+		const emailIds = processedList.map(item => item.emailId);
+		const attsList = await attService.selectByEmailIds(c, emailIds);
+
+		processedList.forEach(emailRow => {
+			const atts = attsList.filter(attsRow => attsRow.emailId === emailRow.emailId);
+			emailRow.attList = atts;
+		});
+
+		return {
+			list: processedList,
+			total: totalRow.total,
+			keyword: keyword
+		};
 	}
 };
 

@@ -58,6 +58,16 @@ const routes = [
                     menu: true
                 }
             },
+            {
+                path: '/search',
+                name: 'search',
+                component: () => import('@/views/search/index.vue'),
+                meta: {
+                    title: '搜索邮件',
+                    name: 'search',
+                    menu: true
+                }
+            },
         ]
 
     },

@@ -4,6 +4,22 @@
       <hanburger @click="changeAside"></hanburger>
       <span class="breadcrumb-item">{{ route.meta.title }}</span>
     </div>
+    <!-- 🔍 快速搜索入口 -->
+    <div class="quick-search" v-if="!isMobile">
+      <el-input
+        v-model="quickSearchKeyword"
+        placeholder="快速搜索邮件..."
+        class="search-input"
+        clearable
+        @keyup.enter="handleQuickSearch"
+        @focus="handleSearchFocus"
+      >
+        <template #prefix>
+          <Icon icon="material-symbols:search" width="16" height="16" />
+        </template>
+      </el-input>
+    </div>
+    
     <!-- 📱 移动端头部简化 - 写邮件按钮移至悬浮位置 -->
     <div class="toolbar">
       <div class="email">
@@ -70,7 +86,7 @@ import {Icon} from "@iconify/vue";
 import {useUiStore} from "@/store/ui.js";
 import {useUserStore} from "@/store/user.js";
 import { useRoute } from "vue-router";
-import {computed, ref} from "vue";
+import {computed, ref, onMounted, onBeforeUnmount} from "vue";
 import {useSettingStore} from "@/store/setting.js";
 import hasPerm from "@/utils/perm.js";
 import screenfull from "screenfull";
@@ -80,6 +96,41 @@ const settingStore = useSettingStore();
 const userStore = useUserStore();
 const uiStore = useUiStore();
 const logoutLoading = ref(false)
+
+// 🔍 搜索相关状态
+const quickSearchKeyword = ref('')
+const isMobile = ref(window.innerWidth < 768)
+
+// 🔍 处理窗口大小变化
+const handleResize = () => {
+  isMobile.value = window.innerWidth < 768
+}
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+})
+
+// 🔍 快速搜索处理
+function handleQuickSearch() {
+  if (quickSearchKeyword.value.trim()) {
+    router.push({
+      name: 'search',
+      query: { q: quickSearchKeyword.value.trim() }
+    })
+  }
+}
+
+// 🔍 搜索框获得焦点时的处理
+function handleSearchFocus() {
+  // 如果当前不在搜索页面，可以直接跳转到搜索页面
+  if (route.name !== 'search') {
+    router.push({ name: 'search' })
+  }
+}
 
 const accountCount = computed(() => {
   return userStore.user.role.accountCount
@@ -340,6 +391,54 @@ function full() {
     font-size: 14px;
     padding: 0 12px;
     grid-template-columns: auto 1fr auto;
+  }
+}
+
+/* 🔍 快速搜索样式 */
+.quick-search {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 20px;
+
+  .search-input {
+    :deep(.el-input__inner) {
+      height: 36px;
+      border-radius: 18px;
+      border: 1px solid #e2e8f0;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      font-size: 14px;
+
+      &:focus {
+        border-color: var(--el-color-primary);
+        box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.1);
+        background: rgba(255, 255, 255, 1);
+      }
+
+      &::placeholder {
+        color: #94a3b8;
+        font-size: 13px;
+      }
+    }
+
+    :deep(.el-input__prefix) {
+      left: 12px;
+      color: #64748b;
+    }
+
+    :deep(.el-input__suffix) {
+      right: 8px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    max-width: 300px;
+    margin: 0 16px;
+  }
+
+  @media (max-width: 768px) {
+    display: none; /* 移动端隐藏，使用侧边栏搜索 */
   }
 }
 
