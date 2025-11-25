@@ -2,6 +2,9 @@
   <div class="user-box">
     <div class="header-actions">
       <Icon class="icon" icon="ion:add-outline" width="23" height="23" @click="openAdd"/>
+      <el-button v-if="selectedUsers.length > 0" size="small" type="danger" @click="batchDelete">
+        批量删除 ({{ selectedUsers.length }})
+      </el-button>
       <div class="search">
         <el-input
             v-model="params.email"
@@ -31,6 +34,7 @@
         </div>
         <el-table
             @filter-change="tableFilter"
+            @selection-change="handleSelectionChange"
             :empty-text="first ? '' : null"
             :default-expand-all="expandStatus"
             :data="users"
@@ -38,6 +42,7 @@
             style="width: 100%;"
             :key="key"
         >
+          <el-table-column type="selection" :width="selectionWidth" />
           <el-table-column :width="expandWidth" type="expand">
             <template #default="props">
               <div class="details">
@@ -229,7 +234,9 @@ import {
   userSetStatus,
   userSetType,
   userAdd,
-  userRestSendCount, userRestore
+  userRestSendCount, 
+  userRestore,
+  userBatchDelete
 } from '@/request/user.js'
 import {roleSelectUse} from "@/request/role.js";
 import {Icon} from "@iconify/vue";
@@ -252,7 +259,9 @@ const filters = [{text: '正常', value: 'normal'}, {text: '删除', value: 'del
 const preserveExpanded = ref(false)
 const emailWidth = ref(230)
 const expandWidth = ref(40)
+const selectionWidth = ref(40)
 const settingWidth = ref(null)
+const selectedUsers = ref([])
 const sendNumShow = ref(true)
 const accountNumShow = ref(true)
 const createTimeShow = ref(true)
@@ -532,6 +541,43 @@ function resetSendCount(user) {
   });
 }
 
+function handleSelectionChange(selection) {
+  selectedUsers.value = selection
+}
+
+function batchDelete() {
+  if (selectedUsers.value.length === 0) {
+    ElMessage({
+      message: "请先选择要删除的用户",
+      type: "warning",
+      plain: true
+    })
+    return
+  }
+
+  const userEmails = selectedUsers.value.map(u => u.email).join('、')
+  const displayEmails = selectedUsers.value.length > 3 
+    ? `${selectedUsers.value.slice(0, 3).map(u => u.email).join('、')} 等${selectedUsers.value.length}个用户`
+    : userEmails
+
+  ElMessageBox.confirm(`确认删除 ${displayEmails} 及其所有相关数据吗？此操作不可恢复！`, {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    const userIds = selectedUsers.value.map(u => u.userId).join(',')
+    userBatchDelete(userIds).then(() => {
+      ElMessage({
+        message: "批量删除成功",
+        type: "success",
+        plain: true
+      })
+      selectedUsers.value = []
+      getUserList(false)
+    })
+  });
+}
+
 function delUser(user) {
   ElMessageBox.confirm(`确认删除${user.email}吗?`, {
     confirmButtonText: '确定',
@@ -742,6 +788,7 @@ function adjustWidth() {
   emailWidth.value = width > 480 ? 230 : null
   settingWidth.value = width < 480 ? 75 : null
   expandWidth.value = width < 480 ? 25 : 40
+  selectionWidth.value = width < 480 ? 35 : 40
   pagerCount.value = width < 768 ? 7 : 11
   receiveWidth.value = width < 480 ? 90 : null
   layout.value = width < 768 ? 'pager' : 'prev, pager, next,sizes, total'

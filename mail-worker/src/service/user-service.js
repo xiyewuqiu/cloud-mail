@@ -107,6 +107,19 @@ const userService = {
 		await c.env.kv.delete(kvConst.AUTH_INFO + userId);
 	},
 
+	async batchPhysicsDelete(c, params) {
+		let { userIds } = params;
+		if (!userIds) {
+			throw new BizError('用户ID不能为空');
+		}
+		userIds = userIds.split(',').map(Number);
+		await accountService.physicsDeleteByUserIds(c, userIds);
+		await orm(c).delete(user).where(inArray(user.userId, userIds)).run();
+		for (const userId of userIds) {
+			await c.env.kv.delete(kvConst.AUTH_INFO + userId);
+		}
+	},
+
 	async list(c, params) {
 
 		let { num, size, email, timeSort, status } = params;

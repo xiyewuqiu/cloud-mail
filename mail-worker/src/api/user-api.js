@@ -8,6 +8,11 @@ app.delete('/user/delete', async (c) => {
 	return c.json(result.ok());
 });
 
+app.delete('/user/batchDelete', async (c) => {
+	await userService.batchPhysicsDelete(c, c.req.query());
+	return c.json(result.ok());
+});
+
 app.put('/user/setPwd', async (c) => {
 	await userService.setPwd(c, await c.req.json());
 	return c.json(result.ok());
