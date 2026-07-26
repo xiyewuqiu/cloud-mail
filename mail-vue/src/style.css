@@ -27,7 +27,7 @@ html, body {
 }
 
 body {
-    font-family: -apple-system, Inter, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-family: "SimSun", "宋体", "Songti SC", serif;
     line-height: 1.5;
     color: var(--el-text-color-primary);
     font-size: 14px;
