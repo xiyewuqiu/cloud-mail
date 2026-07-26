@@ -6,14 +6,14 @@ keep_vars = true
 [observability]
 enabled = true
 
-#[[d1_databases]]
-#binding = "db"			#d1数据库绑定名默认不可修改
-#database_name = ""		#d1数据库名字
-#database_id = ""		#d1数据库id
+[[d1_databases]]
+binding = "db"
+database_name = "email"
+database_id = "1bceb53f-5893-4bb0-a53f-7abb807b8f38"
 
-#[[kv_namespaces]]
-#binding = "kv"			#kv绑定名默认不可修改
-#id = ""					#kv数据库id
+[[kv_namespaces]]
+binding = "kv"
+id = "b0b6379a6e3a4ebdaec6dd46f8701e60"
 
 #[[r2_buckets]]
 #binding = "r2"			#r2对象存储绑定名默认不可修改
@@ -36,12 +36,26 @@ crons = ["0 16 * * *"]	#每天晚上12点执行每日任务,刷新分析缓存
 
 
 [vars]
-#ai_model = ""			#ai模型,不填默认使用@cf/meta/llama-3.1-8b-instruct
-#analysis_cache = false			#是否开启分析数据缓存
-#orm_log = false			#是否sql日志
-#domain = []				#邮件域名可可配置多个 示例: ["example1.com","example2.com"]
-#admin = ""				#管理员的邮箱	示例: admin@example.com
-#jwt_secret = ""			#jwt令牌的密钥,随便填一串字符串
+add_email = 1
+add_email_verify = 1
+admin = "admin@djxs.xyz"
+auto_refresh_time = 29
+domain = ["djxs.xyz"]
+forward_email = "xiyewuqiu@gmail.com"
+forward_status = 1
+jwt_secret = "mysecret123"
+login_opacity = 0.88
+many_email = 1
+orm_log = false
+r2_domain = "https://r2.djxs.xyz"
+receive = 0
+register = 0
+register_verify = 1
+rule_email = ""
+rule_type = 0
+send = 0
+tg_bot_status = 1
+title = "忘忧草"
 
 [build]
 command = "pnpm --prefix ../mail-vue install && pnpm --prefix ../mail-vue run build"
